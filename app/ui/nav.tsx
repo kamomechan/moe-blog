@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 const links = [
   { name: "Home", href: "/" },
@@ -15,26 +16,35 @@ export default function Nav() {
   function toggleSideBar() {
     setIsOpen(!isOpen);
   }
+  const pathname = usePathname();
 
   return (
     <nav>
       <button
-        className="fixed top-4 right-4 p-8 bg-blue-200 z-20 rounded-4xl cursor-pointer hover:scale-95 hover:opacity-90 transition-[scale,opacity] duration-300"
+        className="fixed top-[1.8vw] right-[1.8vw] w-[16vw] h-[16vw] bg-[#a8d8ff] z-20 rounded-[50%] cursor-pointer hover:scale-95 hover:opacity-90 transition-[scale,opacity] duration-300 lg:w-20 lg:h-20 lg:top-3 lg:right-3"
         onClick={toggleSideBar}
       >
         <div
           className={clsx(
-            "absolute top-[40%] right-[30%] h-0.5 w-[40%] bg-white transition-transform duration-300",
+            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300",
             {
-              "translate-y-1.5 rotate-45": isOpen,
+              "top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2": isOpen,
+              "rotate-45": isOpen,
+            },
+            {
+              "top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2": !isOpen,
             }
           )}
         ></div>
         <div
           className={clsx(
-            "absolute top-[60%] right-[30%] h-0.5 w-[40%] bg-white transition-transform duration-300",
+            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300",
             {
-              "-translate-y-1.5 -rotate-45": isOpen,
+              "top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2": isOpen,
+              "-rotate-45": isOpen,
+            },
+            {
+              "top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2": !isOpen,
             }
           )}
         ></div>
@@ -48,7 +58,7 @@ export default function Nav() {
       ></div>
       <div
         className={clsx(
-          "flex flex-col bg-blue-100  w-[75vw] h-screen fixed -right-full pt-20 transition-[right] duration-500",
+          "flex flex-col bg-[#cce1ff] w-[75vw] h-screen fixed -right-full pt-[26vw] transition-[right] duration-500 lg:w-96 lg:pt-40",
           {
             "right-0": isOpen,
           }
@@ -58,8 +68,25 @@ export default function Nav() {
           <Link
             href={link.href}
             key={link.name}
-            className="py-4 text-lg text-[#4a6384] pl-[20vw]"
+            className={clsx(
+              "group mt-[9vw] text-[5vw] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px]",
+              {
+                "text-[#0b3f8c]": pathname === link.href,
+              },
+              {
+                "text-[#6f9aca]": pathname !== link.href,
+              }
+            )}
           >
+            <div
+              className={clsx(
+                "w-[4vw] h-[0.5vw] bg-[#7398ce] relative top-1/2 right-[12%] transition-opacity duration-300 lg:w-5 lg:h-[3px]",
+                {
+                  "opacity-0": pathname !== link.href,
+                  "group-hover:opacity-100": true,
+                }
+              )}
+            ></div>
             {link.name}
           </Link>
         ))}
