@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-[url(/background.webp)] bg-cover bg-no-repeat bg-fixed">
         <header>
           <Nav />
         </header>

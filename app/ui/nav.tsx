@@ -69,13 +69,7 @@ export default function Nav() {
             href={link.href}
             key={link.name}
             className={clsx(
-              "group mt-[9vw] text-[5vw] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px]",
-              {
-                "text-[#0b3f8c]": pathname === link.href,
-              },
-              {
-                "text-[#6f9aca]": pathname !== link.href,
-              }
+              "group mt-[9vw] text-[5vw] text-[#47638a] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px]"
             )}
           >
             <div
