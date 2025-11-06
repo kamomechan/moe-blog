@@ -58,7 +58,7 @@ export default function Nav() {
         onClick={toggleSideBar}
         tabIndex={0}
         role="button"
-        aria-label={isOpen ? "Close navigation menu" : ""}
+        aria-label={isOpen ? "Close navigation menu" : "placeholder"}
       ></div>
       <div
         className={clsx(
