@@ -23,6 +23,7 @@ export default function Nav() {
       <button
         className="fixed top-[1.8vw] right-[1.8vw] w-[16vw] h-[16vw] bg-[#a8d8ff] z-20 rounded-[50%] cursor-pointer hover:scale-95 hover:opacity-90 transition-[scale,opacity] duration-300 lg:w-20 lg:h-20 lg:top-3 lg:right-3"
         onClick={toggleSideBar}
+        aria-label="Navigation menu"
       >
         <div
           className={clsx(
@@ -52,13 +53,16 @@ export default function Nav() {
       {/* content area color transition */}
       <div
         className={clsx("transition-[background-color] duration-700", {
-          "bg-[#53608c80] h-screen w-screen fixed": isOpen,
+          "bg-[#53608c80] h-screen w-screen fixed z-5 cursor-pointer": isOpen,
         })}
         onClick={toggleSideBar}
+        tabIndex={0}
+        role="button"
+        aria-label={isOpen ? "Close navigation menu" : ""}
       ></div>
       <div
         className={clsx(
-          "flex flex-col bg-[#cce1ff] w-[75vw] h-screen fixed -right-full pt-[26vw] transition-[right] duration-500 lg:w-96 lg:pt-40",
+          "flex flex-col bg-[#cce1ff] w-[75vw] h-screen fixed z-10 -right-full pt-[26vw] transition-[right] duration-500 lg:w-96 lg:pt-40",
           {
             "right-0": isOpen,
           }
