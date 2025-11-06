@@ -21,4 +21,19 @@ const preview = filenameInArticles.map((filename) => {
   result.data.href = path.join("/post/", filename);
   return result;
 });
+
+// desc sort
+preview.sort((a, b) => {
+  const dateA: Date = a.data.date;
+  const dateB: Date = b.data.date;
+  const timeA = dateA.getTime();
+  const timeB = dateB.getTime();
+  if (timeA - timeB > 0) {
+    return -1;
+  } else if (timeA - timeB < 0) {
+    return 1;
+  }
+  return 0;
+});
+
 export default preview;

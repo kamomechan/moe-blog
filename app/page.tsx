@@ -10,13 +10,13 @@ export default function Home() {
       <h1 className="text-center text-[13vw] text-[#3f80b5] pt-[17.8vw] lg:text-[5.2vw] lg:pt-[2.9vw]">
         Posts
       </h1>
-      <div className="grid mt-[6.5vw] mb-[10vw] ml-auto mr-auto w-[89vw] grid-cols-[1fr] auto-rows-[minmax(30vw,1fr)] gap-y-[10vw] lg:gap-[5vw] lg:grid-cols-[repeat(2,1fr)] lg:auto-rows-[minmax(8vw,1fr)] lg:w-[77vw] lg:mt-[2.5vw]">
+      <div className="grid mt-[6.5vw] mb-[10vw] ml-auto mr-auto w-[89vw] grid-cols-[1fr] auto-rows-[minmax(30vw,1fr)] gap-y-[10vw] lg:gap-[5vw] lg:grid-cols-[repeat(2,1fr)] lg:auto-rows-[minmax(8vw,1fr)] lg:w-[77vw] lg:mt-[2.5vw] lg:mb-[5vw]">
         {articles.map((article) => {
           return (
             <Link
               href={article.href}
               key={article.title}
-              className="relative rounded-[1.3vw] shadow-[0_2.6041666667vw_2.6041666667vw_rgba(71,80,104,.14)] lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)]"
+              className="relative rounded-[1.3vw] shadow-[0_2.6041666667vw_2.6041666667vw_rgba(71,80,104,.14)] lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:hover:opacity-40 lg:transition-opacity lg:duration-300"
             >
               <div className="text-[#445f86] text-center text-[5.6vw] line-clamp-2 m-[6.6vw_2vw] lg:text-[1.6vw] lg:text-[#445F86] lg:m-[2.6vw_2vw]">
                 {article.title}
