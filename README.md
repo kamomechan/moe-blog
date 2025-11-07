@@ -2,7 +2,7 @@
 
 ## 简介
 
-这是一个使用 nextjs 构建的萌萌 blob
+这是一个使用 nextjs 构建的萌萌 blog
 
 ## 待定
 
