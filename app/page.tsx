@@ -1,9 +1,20 @@
 import preview from "@/app/lib/preview";
 import Link from "next/link";
-export default function Home() {
-  const articles = preview.map((article) => {
+import Pagination from "@/app/ui/pagination";
+export default async function Home(props: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams.page) || 1;
+
+  let articles = preview.map((article) => {
     return article.data;
   });
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(articles.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  articles = articles.slice(startIndex, endIndex);
 
   return (
     <>
@@ -28,6 +39,7 @@ export default function Home() {
           );
         })}
       </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 }
