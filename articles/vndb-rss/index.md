@@ -14,17 +14,17 @@ description: VNDB RSS 订阅服务，通过调用 vndb-api 获取数据，用来
 
 RSS 阅读器分别是开源的 [fluent-reader](https://github.com/yang991178/fluent-reader/releases/tag/v1.1.4) 和 [Feeder](https://github.com/spacecowboy/Feeder/releases/tag/2.11.5)
 
-![](./images/1.webp)
+![screenshort](./images/1.webp)
 
-![](./images/2.webp)
+![screenshort](./images/2.webp)
 
-![](./images/3.webp)
+![screenshort](./images/3.webp)
 
-![](./images/4.webp)
+![screenshort](./images/4.webp)
 
-![](./images/5.webp)
+![screenshort](./images/5.webp)
 
-![](./images/6.webp)
+![screenshort](./images/6.webp)
 
 ## 特性
 
@@ -159,4 +159,4 @@ RSS 阅读器分别是开源的 [fluent-reader](https://github.com/yang991178/fl
 
 ## License
 
-本项目采用 [AGPL-3.0](./LICENSE) 开源许可证
+本项目采用 AGPL-3.0 开源许可证

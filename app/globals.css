@@ -1,1 +1,7 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@utility prose-custom {
+  --tw-prose-bullets: #a5a8ae;
+  --tw-prose-quote-borders: #8aa3d4;
+  --tw-prose-hr: #b0abac;
+}

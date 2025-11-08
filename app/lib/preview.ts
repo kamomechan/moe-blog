@@ -10,6 +10,7 @@ const preview = filenameInArticles.map((filename) => {
   const articlePath = path.join(articlesDir, filename, "index.md");
   const result = matter.read(articlePath);
   result.data.href = path.join("/post/", filename);
+  result.data.id = filename;
   return result;
 });
 
