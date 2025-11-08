@@ -1,3 +1,9 @@
+---
+title: moe-blog
+date: 2025-11-08
+description: VNDB RSS 订阅服务，通过调用 vndb-api 获取数据，用来追踪最近发布的视觉小说，并进行格式化显示
+---
+
 # moe-blog
 
 ## 简介

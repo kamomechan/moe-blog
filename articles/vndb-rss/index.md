@@ -2,6 +2,7 @@
 title: vndb-rss
 date: 2025-06-01
 description: VNDB RSS 订阅服务，通过调用 vndb-api 获取数据，用来追踪最近发布的视觉小说，并进行格式化显示
+edit: 2025-10-19
 ---
 
 # vndb-rss

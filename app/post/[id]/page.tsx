@@ -29,7 +29,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       </h1>
       <article className="w-[89vw] m-[6.5vw_auto] p-[7.8vw_6.5vw_3.2vw] rounded-[1.3vw] shadow-[0_2.6041666667vw_2.6041666667vw_rgba(71,80,104,.14)] lg:w-[50vw] lg:m-[3vw_auto_5vw] lg:p-[3.1vw_4vw_2vw] lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:rounded-[0.5vw]">
         <div
-          className="prose prose-headings:text-[#3f80b5] prose-custom lg:prose-lg"
+          className="prose prose-headings:text-[#3f80b5] prose-custom"
           dangerouslySetInnerHTML={{ __html: html }}
         ></div>
         <time className="text-[#3876a8] text-[0.8rem] mt-4 flex justify-end lg:mt-8">
