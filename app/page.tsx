@@ -1,6 +1,7 @@
 import preview from "@/app/lib/preview";
 import Link from "next/link";
 import Pagination from "@/app/ui/pagination";
+
 export default async function Home(props: {
   searchParams: Promise<{ page?: string }>;
 }) {
@@ -33,7 +34,7 @@ export default async function Home(props: {
                 {article.title}
               </div>
               <div className="absolute right-[2vw] bottom-[1vw] text-[#6c5b67] text-[3.5vw] lg:text-[1vw] lg:bottom-[0.4vw] lg:right-[1vw]">
-                {article.date.toISOString().split("T")[0]}
+                {article.date}
               </div>
             </Link>
           );

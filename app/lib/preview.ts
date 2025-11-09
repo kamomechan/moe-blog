@@ -1,23 +1,29 @@
 import path from "node:path";
 import { readdirSync } from "node:fs";
-import * as matter from "gray-matter";
+import { MetadataType } from "./definitions";
 
 const rootPath = process.cwd();
 const articlesDir = path.join(rootPath, "articles");
 const filenameInArticles = readdirSync(articlesDir);
 
-const preview = filenameInArticles.map((filename) => {
-  const articlePath = path.join(articlesDir, filename, "index.md");
-  const result = matter.read(articlePath);
-  result.data.href = path.join("/post/", filename);
-  result.data.id = filename;
-  return result;
+const preview = filenameInArticles.map(async (filename) => {
+  const articlePath = path.join("@/articles", filename, "index.mdx");
+  const {
+    metadata: data,
+    default: content,
+  }: { metadata: MetadataType; default: React.ComponentType } = await import(
+    articlePath
+  );
+  data.id = filename;
+  data.href = `/post/${filename}`;
+  return { data, content };
 });
 
-// desc sort
-preview.sort((a, b) => {
-  const dateA: Date = a.data.date;
-  const dateB: Date = b.data.date;
+const resolvedPreview = await Promise.all(preview);
+
+resolvedPreview.sort((a, b) => {
+  const dateA = new Date(a.data.date);
+  const dateB = new Date(b.data.date);
   const timeA = dateA.getTime();
   const timeB = dateB.getTime();
   if (timeA - timeB > 0) {
@@ -28,4 +34,4 @@ preview.sort((a, b) => {
   return 0;
 });
 
-export default preview;
+export default resolvedPreview;

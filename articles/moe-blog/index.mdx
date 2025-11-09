@@ -1,3 +1,13 @@
+import Image from "next/image";
+import i1 from "./images/1.webp";
+import i2 from "./images/2.webp";
+export const metadata = {
+  title: "moe-blog",
+  date: "2025-11-08",
+  description: "使用 nextjs 构建的萌萌 blog",
+  edit: "2025-11-09",
+};
+
 # moe-blog
 
 ## 简介
@@ -6,9 +16,8 @@
 
 ## lighthouse
 
-![screenshort](./articles/moe-blog/images/1.webp)
-
-![screenshort](./articles/moe-blog/images/2.webp)
+<Image src={i1} alt="screenshort" />
+<Image src={i2} alt="screenshort" />
 
 ## 日志
 

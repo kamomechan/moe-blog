@@ -1,9 +1,18 @@
----
-title: vndb-rss
-date: 2025-06-01
-description: VNDB RSS 订阅服务，通过调用 vndb-api 获取数据，用来追踪最近发布的视觉小说，并进行格式化显示
-edit: 2025-10-19
----
+import Image from "next/image";
+import i1 from "./images/1.webp";
+import i2 from "./images/2.webp";
+import i3 from "./images/3.webp";
+import i4 from "./images/4.webp";
+import i5 from "./images/5.webp";
+import i6 from "./images/6.webp";
+
+export const metadata = {
+  title: "vndb-rss",
+  date: "2025-06-01",
+  description:
+    "VNDB RSS 订阅服务，通过调用 vndb-api 获取数据，用来追踪最近发布的视觉小说，并进行格式化显示",
+  edit: "2025-10-19",
+};
 
 # vndb-rss
 
@@ -15,17 +24,12 @@ edit: 2025-10-19
 
 RSS 阅读器分别是开源的 [fluent-reader](https://github.com/yang991178/fluent-reader/releases/tag/v1.1.4) 和 [Feeder](https://github.com/spacecowboy/Feeder/releases/tag/2.11.5)
 
-![screenshort](./images/1.webp)
-
-![screenshort](./images/2.webp)
-
-![screenshort](./images/3.webp)
-
-![screenshort](./images/4.webp)
-
-![screenshort](./images/5.webp)
-
-![screenshort](./images/6.webp)
+<Image src={i1} alt="screenshort" />
+<Image src={i2} alt="screenshort" />
+<Image src={i3} alt="screenshort" />
+<Image src={i4} alt="screenshort" />
+<Image src={i5} alt="screenshort" />
+<Image src={i6} alt="screenshort" />
 
 ## 特性
 
@@ -137,8 +141,8 @@ RSS 阅读器分别是开源的 [fluent-reader](https://github.com/yang991178/fl
 
 **Q: 为什么部分视觉小说数据缺失？**
 
-当前筛选规则仅包含 **可下载版（DL 版）**，不包括实体版。
-同时，**非官方补丁**仅筛选了**免费补丁**内容，**自定义标签**默认不包含 [**g3723**](https://vndb.org/g3723)，**自定义版本**默认不包含**官方体验版**，因此部分条目会被排除（如果你有其他需求和喜好，可以修改配置文件自部署哦><）
+当前筛选规则仅包含 **可下载版 (DL 版）**，不包括实体版。
+同时，**非官方补丁**仅筛选了**免费补丁**内容，**自定义标签**默认不包含 [**g3723**](https://vndb.org/g3723)，**自定义版本**默认不包含**官方体验版**，因此部分条目会被排除（如果你有其他需求和喜好，可以修改配置文件自部署哦>< )
 
 ---
 

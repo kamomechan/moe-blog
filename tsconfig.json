@@ -22,6 +22,10 @@
       "@/*": ["./*"]
     }
   },
+  "mdx": {
+    // Enable strict type checking in MDX files.
+    "checkMdx": true
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
