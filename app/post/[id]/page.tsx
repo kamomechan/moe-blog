@@ -4,6 +4,22 @@ import getRenderer from "@/app/lib/renderer";
 
 export const dynamicParams = false;
 
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await props.params;
+  const [article] = preview.filter((article) => {
+    if (id === article.data.id) {
+      return true;
+    }
+    return false;
+  });
+  return {
+    title: article.data.title,
+    description: article.data.description,
+  };
+}
+
 export function generateStaticParams() {
   const articles = preview.map((article) => article.data);
   return articles.map((item) => ({ id: item.id }));
