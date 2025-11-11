@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import Copy from "@/app/ui/copy";
+import Copy from "@/app/ui/post/copy";
 
 const components: MDXComponents = {
   pre: Copy,

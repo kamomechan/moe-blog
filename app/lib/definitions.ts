@@ -7,4 +7,9 @@ interface MetadataType {
   edit: string;
 }
 
-export type { MetadataType };
+interface HeadingType {
+  title: string;
+  depth: number;
+}
+
+export type { MetadataType, HeadingType };

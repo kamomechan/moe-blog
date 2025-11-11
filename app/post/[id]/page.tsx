@@ -1,5 +1,7 @@
 import preview from "@/app/lib/preview";
 import type { Metadata } from "next";
+import headings from "@/app/lib/headings";
+import Toc from "@/app/ui/post/toc";
 
 export const dynamicParams = false;
 
@@ -30,6 +32,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const { content: Post } = article;
   const date = article.data.date;
   const editedDate = article.data.edit;
+  const head = headings(id);
+
   return (
     <>
       <h1 className="text-center text-[13vw] text-[#3f80b5] pt-[17.8vw] lg:text-[5.2vw] lg:pt-[2.9vw]">
@@ -43,6 +47,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           {editedDate ? `Last edited on ${editedDate}` : `Created on ${date}`}
         </time>
       </article>
+      <Toc head={head} />
     </>
   );
 }
