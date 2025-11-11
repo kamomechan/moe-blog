@@ -16,6 +16,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
         <button
           className="fixed z-20 right-[2.5vw] bottom-[14.5vw] p-[3vw] lg:hidden"
           onClick={toggleToc}
+          aria-label="Table Of Content button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +41,9 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                   isOpen,
               })}
               onClick={toggleToc}
+              role="button"
+              aria-label={isOpen ? "Close table of content" : "placeholder"}
+              tabIndex={0}
             ></div>
 
             <div
