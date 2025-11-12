@@ -1,7 +1,6 @@
 "use client";
 
-import type { ClassAttributes, HTMLAttributes } from "react";
-import type { JSX } from "react/jsx-runtime";
+import type { ClassAttributes, HTMLAttributes, JSX } from "react";
 import { useRef, useState } from "react";
 import { setTimeout } from "node:timers";
 
