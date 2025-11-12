@@ -1,0 +1,20 @@
+:is(h2, h3) {
+  position: relative;
+}
+
+:is(h2, h3) a {
+  text-decoration: none;
+}
+
+:is(h2, h3) .icon-link::before {
+  content: "#";
+  opacity: 0;
+  position: absolute;
+  transform: translate(-1.2ch, -0.1rem);
+  color: rgb(120, 120, 208);
+}
+
+:is(h2, h3):hover .icon-link::before,
+:is(h2, h3):target .icon-link::before {
+  opacity: 1;
+}

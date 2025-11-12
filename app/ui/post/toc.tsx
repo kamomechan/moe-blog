@@ -36,7 +36,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
         {head.length > 1 && (
           <>
             <div
-              className={clsx("transition-colors duration-700", {
+              className={clsx("transition-colors duration-700 lg:hidden", {
                 "fixed w-screen h-screen top-0 z-5 bg-[#53608c80] cursor-pointer":
                   isOpen,
               })}
@@ -50,17 +50,16 @@ export default function Toc({ head }: { head: HeadingType[] }) {
               className={clsx(
                 "fixed w-[89vw] max-h-[58vh] rounded-2xl bg-[#cce1ff] -right-full top-[21vh] z-10 flex flex-col overflow-auto pt-[4.5vw] pb-[4.5vw] transition-[right] duration-500 lg:right-[1.5vw] lg:w-[22vw] lg:bg-transparent lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:max-h-[47vh] lg:top-[30vh] lg:z-5 lg:p-[1vw_0]",
                 {
-                  "right-[5.5vw]": isOpen,
+                  "right-[5.5vw] lg:right-[1.5vw]": isOpen,
                 }
               )}
             >
               {head.map((heading) => {
-                const depth = heading.depth;
-                const title = heading.title;
+                const { id, title, depth } = heading;
                 const HeadingTag = `h${depth}` as keyof JSX.IntrinsicElements;
                 return (
                   <a
-                    href={`#${title}`}
+                    href={`#${id}`}
                     key={title}
                     className={clsx(
                       " text-[#47638a] p-[4.5vw_0_4.5vw_10vw] lg:p-[1vw_0_1vw_3vw] lg:text-[#4f6f8a]",
@@ -70,6 +69,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                           depth === 3,
                       }
                     )}
+                    onClick={toggleToc}
                   >
                     <HeadingTag key={title}>{title}</HeadingTag>
                   </a>

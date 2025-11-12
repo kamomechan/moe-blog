@@ -9,6 +9,7 @@ interface MetadataType {
 
 interface HeadingType {
   title: string;
+  id: string;
   depth: number;
 }
 

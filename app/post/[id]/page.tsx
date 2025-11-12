@@ -2,6 +2,7 @@ import preview from "@/app/lib/preview";
 import type { Metadata } from "next";
 import headings from "@/app/lib/headings";
 import Toc from "@/app/ui/post/toc";
+import "@/app/ui/post/post.css";
 
 export const dynamicParams = false;
 

@@ -10,8 +10,10 @@ function headings(id: string) {
   while ((match = reg.exec(content)) !== null) {
     const depth = match[1].length;
     const title = match[2];
+    // Since rehype-slug plugin change id of title
+    const id = match[2].toLowerCase().replace(/\s/g, "-");
     if (depth > 1 && depth < 4) {
-      data.push({ depth, title });
+      data.push({ depth, title, id });
     }
   }
   return data;
