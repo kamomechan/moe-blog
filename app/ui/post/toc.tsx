@@ -4,9 +4,14 @@ import type { JSX } from "react";
 import type { HeadingType } from "@/app/lib/definitions";
 import clsx from "clsx";
 import { useState } from "react";
+import useActiveHeading from "@/app/lib/hooks/use-active-heading";
+import useAutoScroll from "@/app/lib/hooks/use-auto-scroll";
 
 export default function Toc({ head }: { head: HeadingType[] }) {
   const [isOpen, setIsOpen] = useState(false);
+  const activeHeading = useActiveHeading(head);
+  useAutoScroll(activeHeading?.id);
+
   function toggleToc() {
     setIsOpen(!isOpen);
   }
@@ -59,6 +64,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                 const HeadingTag = `h${depth}` as keyof JSX.IntrinsicElements;
                 return (
                   <a
+                    id={`toc-${id}`}
                     href={`#${id}`}
                     key={title}
                     className={clsx(
@@ -67,6 +73,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                         "text-[5vw] lg:text-[1.1vw]": depth === 2,
                         "text-[4.5vw] pl-[15vw] lg:text-[1vw] lg:pl-[4vw]":
                           depth === 3,
+                        "font-bold": id === activeHeading?.id,
                       }
                     )}
                     onClick={toggleToc}
