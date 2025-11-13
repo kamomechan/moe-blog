@@ -38,7 +38,7 @@ post page:
 
 - [x] 文章侧边栏
 
-- [ ] RSS
+- [x] RSS
 
 - [ ] VNDB 阅读列表
 
