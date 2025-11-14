@@ -13,4 +13,36 @@ interface HeadingType {
   depth: number;
 }
 
-export type { MetadataType, HeadingType };
+interface ImageType {
+  url: string;
+  violence: number;
+  sexual: number;
+  dims: number[];
+}
+
+interface DeveloperType {
+  id: string;
+  name: string;
+  original: string | null;
+}
+
+interface VNType {
+  title: string;
+  alttitle: string;
+  image: ImageType | null;
+  description: string | null;
+  released: string | null;
+  developers: DeveloperType[] | null;
+}
+
+interface ResultType {
+  id: string;
+  vn: VNType;
+  vote: number | null;
+}
+
+interface VNDBType {
+  results: ResultType[];
+}
+
+export type { MetadataType, HeadingType, VNDBType };

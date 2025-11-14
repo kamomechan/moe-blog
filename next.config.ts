@@ -4,6 +4,9 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  images: {
+    remotePatterns: [new URL("https://t.vndb.org/**")],
+  },
 };
 
 const withMDX = createMDX({
