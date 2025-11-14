@@ -8,7 +8,7 @@ export default async function getVNList() {
     filters: ["label", "=", "7"],
     sort: "vote",
     reverse: true,
-    results: 10,
+    results: Number(process.env.VNDB_RESULTS) || 10,
   };
 
   try {

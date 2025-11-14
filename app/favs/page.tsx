@@ -31,12 +31,15 @@ export default async function Page() {
                 ></Image>
               </div>
               <div className="flex-5 m-[1.5vw_0_1.5vw_4vw]">
-                <div className="line-clamp-1 font-medium">
-                  <a href={`${vndb}${entry.id}`} className="hover:underline">
+                <div className="font-medium">
+                  <a
+                    href={`${vndb}${entry.id}`}
+                    className="hover:underline line-clamp-1"
+                  >
                     {entry.vn.alttitle || entry.vn.title}
                   </a>
                 </div>
-                <div className="mt-[3vw] text-[#3057b4] lg:mt-[1vw]">
+                <div className="mt-[3vw] text-[#3057b4] lg:mt-[1vw] line-clamp-1">
                   {entry.vn.developers
                     ?.map((item) => item.original || item.name)
                     ?.join("/") || ""}
