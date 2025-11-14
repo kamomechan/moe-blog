@@ -40,7 +40,7 @@ post page:
 
 - [x] RSS
 
-- [ ] VNDB 阅读列表
+- [x] VNDB 阅读列表
 
 - [ ] 类似 Pixiv 的图片查看器(移动端)
 
