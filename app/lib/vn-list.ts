@@ -16,6 +16,9 @@ export default async function getVNList() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(process.env.VNDB_TOKEN
+          ? { Authorization: `Token ${process.env.VNDB_TOKEN}` }
+          : {}),
       },
       body: JSON.stringify(body),
     });

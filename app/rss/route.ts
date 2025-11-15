@@ -1,5 +1,7 @@
 import preview from "@/app/lib/preview";
 
+export const dynamic = "force-static";
+
 export function GET() {
   const title = "moe-blog";
   const description =
