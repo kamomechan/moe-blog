@@ -1,16 +1,46 @@
 import getVNList from "@/app/lib/vn-list";
 import Image from "next/image";
-import { generateFormatNotes } from "../lib/utils";
+import { generateFormatNotes } from "@/app/lib/utils";
 import type { Metadata } from "next";
+import Pagination from "@/app/ui/pagination";
 
 export const metadata: Metadata = {
   title: "favs",
   description: "My favorite visual novels",
 };
 
-export default async function Page() {
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const results = Number(process.env.VNDB_RESULTS) || 10;
+  const entriesPerPage = Number(process.env.ENTRIES_PER_PAGE) || 6;
+  const totalPages = Math.ceil(results / entriesPerPage);
+
+  return Array.from({ length: totalPages }, (_, index) => {
+    if (index === 0) {
+      // Fallback to the /favs path
+      return { id: undefined };
+    }
+    return { id: [(index + 1).toString()] };
+  });
+}
+
+export default async function Page(props: {
+  params: Promise<{ id?: string[] }>;
+}) {
   try {
-    const data = await getVNList();
+    const results = Number(process.env.VNDB_RESULTS) || 10;
+    const entriesPerPage = Number(process.env.ENTRIES_PER_PAGE) || 6;
+    const totalPages = Math.ceil(results / entriesPerPage);
+
+    const params = await props.params;
+    const currentPage = Number(params.id?.[0]) || 1;
+
+    const vnList = await getVNList();
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+
+    const data = vnList?.results.slice(startIndex, endIndex);
 
     const vndb = "https://vndb.org/";
 
@@ -20,7 +50,7 @@ export default async function Page() {
           Favs
         </h1>
         <ul className="grid w-[93vw] m-[15.5vw_auto_10vw_auto] gap-[10vw_5vw] grid-cols-1 auto-rows-[64vw] lg:grid-cols-2 lg:auto-rows-[25vw] lg:w-[85vw] lg:m-[7.5vw_auto_10vw_auto]">
-          {data?.results.map((entry, index) => (
+          {data?.map((entry, index) => (
             <li key={index} className="flex">
               <div className="relative flex-5 overflow-hidden">
                 <Image
@@ -57,6 +87,7 @@ export default async function Page() {
             </li>
           ))}
         </ul>
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
       </>
     );
   } catch (error) {

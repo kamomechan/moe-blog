@@ -14,9 +14,12 @@ export default function Pagination({
 }) {
   const allPages = generatePagination(currentPage, totalPages);
   const pathname = usePathname();
+  // / or /favs or empty
+  const basePath = pathname.replace(/\/\d+$/, "");
+  const cleanPath = basePath === "/" ? "/" : basePath.replace(/\/$/, "");
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mb-[7vw] lg:mb-[3vw]">
       {allPages.length > 1 &&
         allPages.map((page, index) => {
           if (page === "..." && index === 0) {
@@ -26,7 +29,14 @@ export default function Pagination({
             return <span key={"right-ellipsis"}>{page}</span>;
           }
 
-          const href = `${pathname}?page=${page}`;
+          let href;
+          if (page === 1) {
+            // cleanPath may be an empty string
+            href = cleanPath || "/";
+          } else {
+            href = cleanPath === "/" ? `/${page}` : `${cleanPath}/${page}`;
+          }
+
           return (
             <Link
               href={href}

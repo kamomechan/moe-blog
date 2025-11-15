@@ -2,17 +2,37 @@ import preview from "@/app/lib/preview";
 import Link from "next/link";
 import Pagination from "@/app/ui/pagination";
 
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  const articles = preview.map((article) => {
+    return article.data;
+  });
+  const itemsPerPage = Number(process.env.ITEMS_PER_PAGE) || 6;
+  const totalPages = Math.ceil(articles.length / itemsPerPage);
+
+  return Array.from({ length: totalPages }, (_, index) => {
+    if (index === 0) {
+      // Fallback to the / path
+      return { id: undefined };
+    }
+    return { id: [(index + 1).toString()] };
+  });
+}
+
 export default async function Home(props: {
-  searchParams: Promise<{ page?: string }>;
+  params: Promise<{ id?: string[] }>;
 }) {
-  const searchParams = await props.searchParams;
-  const currentPage = Number(searchParams.page) || 1;
+  const params = await props.params;
+
+  const currentPage = Number(params.id?.[0]) || 1;
 
   let articles = preview.map((article) => {
     return article.data;
   });
-  const itemsPerPage = 6;
+  const itemsPerPage = Number(process.env.ITEMS_PER_PAGE) || 6;
   const totalPages = Math.ceil(articles.length / itemsPerPage);
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   articles = articles.slice(startIndex, endIndex);
