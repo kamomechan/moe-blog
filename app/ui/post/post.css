@@ -18,3 +18,13 @@
 :is(h2, h3):target .icon-link::before {
   opacity: 1;
 }
+
+.img-zoom {
+  max-width: 100%;
+}
+
+@media (min-width: 64rem) {
+  .img-zoom {
+    max-width: 80%;
+  }
+}

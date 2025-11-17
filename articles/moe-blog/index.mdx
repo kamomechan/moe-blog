@@ -8,7 +8,7 @@ export const metadata = {
   title: "moe-blog",
   date: "2025-11-08",
   description: "使用 nextjs 构建的萌萌 blog",
-  edit: "2025-11-15",
+  edit: "2025-11-17",
 };
 
 # moe-blog
@@ -45,7 +45,7 @@ post page:
 
 - [x] VNDB 阅读列表
 
-- [ ] 类似 Pixiv 的图片查看器(移动端)
+- [x] ~~类似 Pixiv 的~~图片查看器
 
 - [ ] 搜索框
 
@@ -66,6 +66,30 @@ post page:
 - 2025-11-15 目前所有路由都为 SSG 渲染，之后的评论功能预计使用 ISR 渲染
 
 - 之前为分页功能实现 SSG 思考了一段时间，首先排除使用 `searchParams props`，这会将路由变为动态的 SSR。其次排除使用 `useSearchParams hooks`，这会增加客户端包的体积并且数据离服务端近，如果使用 api-token 还会暴露。这样搜索参数就无法使用了，但可以改为路径，也就是使用 `params props` 获取路径的页码。但是又有个新问题，如果直接使用 `/[slug]` 获取页码，首页就需要重定向到 `/1`,这会影响 SEO 和加载速度，~~到这里思考停止了~~，直到查看[文档](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes#optional-catch-all-segments)无意间看到 `[[...slug]]` 的 slug 参数如果返回 undefined 会回到上一个路由段，也就是说我完全可以利用这个特性，而不是使用重定向，实现相同的效果，结合 `generateStaticParams()`，完美实现 SSG 渲染
+
+- 2025-11-17 目前只做了简单的图片缩放，~~实际上是类似 pixiv 移动端的图片缩放功能，手动实现起来有点复杂，我又不太想使用别人写好的库~~，暂时先咕咕咕了
+
+- 本来以为比较简单，改改 scale 和 translate 属性就好了,但双击缩放的功能，还需要计算一些东西，目前还不能理解下面的公式
+
+- cx​=px​\*S+tx​
+
+- cy-py\*S+ty
+
+- px​=(cx​−tx​​)/S
+
+- py​=(cy​−ty)/S​​
+
+- tx′​=cx​−((cx​−tx​​)/S)×S′
+
+- ty′​=cy​−((cy​−ty​​)/S)×S′
+
+- cx​,cy​: 鼠标点击的视口坐标。
+
+- tx​,ty​: 当前的平移量 (translate.x, translate.y)。
+
+- S: 当前的缩放比例 (scale)。
+
+- px​,py​: 缩放中心点在原始图片坐标系中的位置。
 
 ## License
 

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import headings from "@/app/lib/headings";
 import Toc from "@/app/ui/post/toc";
 import "@/app/ui/post/post.css";
+import ImgZoom from "@/app/ui/post/img-zoom";
 
 export const dynamicParams = false;
 
@@ -49,6 +50,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         </time>
       </article>
       <Toc head={head} />
+      <ImgZoom />
     </>
   );
 }
