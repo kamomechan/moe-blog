@@ -21,10 +21,13 @@
 
 .img-zoom {
   max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 @media (min-width: 64rem) {
   .img-zoom {
-    max-width: 80%;
+    max-width: 90%;
+    max-height: 90%;
   }
 }

@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 const links = [
   { name: "Home", href: "/" },
   { name: "Favs", href: "/favs" },
+  { name: "Search", href: "/search" },
   { name: "RSS", href: "/rss" },
   { name: "Code", href: "https://github.com/kamomechan/moe-blog" },
 ];
@@ -75,6 +76,7 @@ export default function Nav() {
             className={clsx(
               "group mt-[9vw] text-[5vw] text-[#47638a] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px]"
             )}
+            onClick={toggleSideBar}
           >
             <div
               className={clsx(
