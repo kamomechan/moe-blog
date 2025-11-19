@@ -78,7 +78,7 @@ export default function Search() {
           search
         </label>
         <input
-          className="w-[86vw] m-[12vw_auto_12vw_auto] bg-[#a7c4dca1] block rounded-[5vw] py-[2vw] pl-[12vw] lg:p-[0.8vw_0_0.8vw_3vw] lg:w-[48vw] lg:m-[5vw_auto] lg:rounded-[2vw]"
+          className="w-[86vw] m-[12vw_auto_12vw_auto] bg-[#a7c4dc69] block rounded-[5vw] py-[2vw] pl-[12vw] lg:p-[0.8vw_0_0.8vw_3vw] lg:w-[48vw] lg:m-[5vw_auto] lg:rounded-[2vw]"
           id="search"
           placeholder="Search posts..."
           onChange={handleChange}

@@ -68,7 +68,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                     href={`#${id}`}
                     key={title}
                     className={clsx(
-                      " text-[#47638a] p-[4.5vw_0_4.5vw_10vw] lg:p-[1vw_0_1vw_3vw] lg:text-[#4f6f8a]",
+                      " text-[#47638a] p-[4.5vw_0_4.5vw_10vw] lg:p-[1vw_0_1vw_3vw] lg:text-[#4a6882]",
                       {
                         "text-[5vw] lg:text-[1.1vw]": depth === 2,
                         "text-[4.5vw] pl-[15vw] lg:text-[1vw] lg:pl-[4vw]":
