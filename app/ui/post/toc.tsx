@@ -19,7 +19,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
     <aside aria-label="Table of content">
       <nav>
         <button
-          className="fixed z-20 right-[2.5vw] bottom-[14.5vw] p-[3vw] lg:hidden"
+          className="fixed z-8 right-[1vw] bottom-[22.5vw] p-[1.5vw] rounded-[7vw] bg-[#8aa3c6c9] lg:hidden"
           onClick={toggleToc}
           aria-label="Table Of Content button"
         >
@@ -29,7 +29,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-8 text-[#265377]"
+            className="size-[1.8rem] text-white"
           >
             <path
               strokeLinecap="round"
@@ -42,7 +42,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
           <>
             <div
               className={clsx("transition-colors duration-700 lg:hidden", {
-                "fixed w-screen h-screen top-0 z-5 bg-[#53608c80] cursor-pointer":
+                "fixed w-screen h-screen top-0 z-2 bg-[#53608c80] cursor-pointer":
                   isOpen,
               })}
               onClick={toggleToc}
@@ -53,7 +53,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
 
             <div
               className={clsx(
-                "fixed w-[89vw] max-h-[58vh] rounded-2xl bg-[#cce1ff] -right-full top-[21vh] z-10 flex flex-col overflow-auto pt-[4.5vw] pb-[4.5vw] transition-[right] duration-500 lg:right-[1.5vw] lg:w-[22vw] lg:bg-transparent lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:max-h-[47vh] lg:top-[30vh] lg:z-5 lg:p-[1vw_0]",
+                "fixed w-[89vw] max-h-[58vh] rounded-2xl bg-[#cce1ff] -right-full top-[21vh] z-4 flex flex-col overflow-auto pt-[4.5vw] pb-[4.5vw] transition-[right] duration-500 lg:right-[1.5vw] lg:w-[22vw] lg:bg-transparent lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:max-h-[47vh] lg:top-[30vh] lg:z-5 lg:p-[1vw_0]",
                 {
                   "right-[5.5vw] lg:right-[1.5vw]": isOpen,
                 }
