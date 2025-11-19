@@ -22,7 +22,7 @@ export function GET(request: NextRequest) {
       );
     });
 
-  const itemsPerPage = Number(process.env.ITEMS_PER_PAGE);
+  const itemsPerPage = Number(process.env.ITEMS_PER_PAGE || 6);
   const totalPages = Math.ceil(result.length / itemsPerPage);
   const currentPage = Number(page);
   const startIndex = (currentPage - 1) * itemsPerPage;
