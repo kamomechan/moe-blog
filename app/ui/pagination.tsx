@@ -8,9 +8,11 @@ import clsx from "clsx";
 export default function Pagination({
   currentPage,
   totalPages,
+  customQuery,
 }: {
   currentPage: number;
   totalPages: number;
+  customQuery?: string;
 }) {
   const allPages = generatePagination(currentPage, totalPages);
   const pathname = usePathname();
@@ -30,13 +32,18 @@ export default function Pagination({
           }
 
           let href;
-          if (page === 1) {
-            // cleanPath may be an empty string
-            href = cleanPath || "/";
+          // Handle /favs and / paths
+          if (!pathname.includes("/search")) {
+            if (page === 1) {
+              // cleanPath may be an empty string
+              href = cleanPath || "/";
+            } else {
+              href = cleanPath === "/" ? `/${page}` : `${cleanPath}/${page}`;
+            }
           } else {
-            href = cleanPath === "/" ? `/${page}` : `${cleanPath}/${page}`;
+            // Handle /search path
+            href = `${pathname}?page=${page}&query=${customQuery}`;
           }
-
           return (
             <Link
               href={href}

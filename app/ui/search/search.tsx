@@ -4,45 +4,66 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import type { MetadataType } from "@/app/lib/definitions";
 import Link from "next/link";
 import { useDebouncedCallback } from "use-debounce";
+import Pagination from "@/app/ui/pagination";
 
 export default function Search() {
   const [isData, setIsData] = useState<MetadataType[]>([]);
+  const [isTotalPages, setIsTotalPages] = useState(0);
+  const [isCurrentPages, setIsCurrentPages] = useState(0);
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  async function fetchData(params: URLSearchParams) {
+  async function fetchData(params: URLSearchParams, ignore: boolean) {
     try {
       const response = await fetch(`/api/search?${params.toString()}`);
       if (!response.ok) {
         const { error } = await response.json();
         throw new Error(error);
       }
-      const data = await response.json();
-      setIsData(JSON.parse(data));
+      const { data, totalPages } = await response.json();
+
+      if (!ignore) {
+        setIsData(JSON.parse(data));
+        setIsTotalPages(Number(totalPages));
+        setIsCurrentPages(Number(params.get("page")));
+      }
     } catch (error) {
       console.error(error, "Fetch error of search data");
     }
   }
 
-  // Handle initial load with search params
+  // Handling search parameters during initial load and when they change
   useEffect(() => {
+    // Avoid `race condition`
+    let ignore = false;
+
     const params = new URLSearchParams(searchParams);
     const value = params.get("query");
+    const page = params.get("page");
+    if (!page) {
+      params.set("page", "1");
+    }
     if (value) {
-      fetchData(params);
+      fetchData(params, ignore);
     } else {
       setIsData([]);
+      setIsTotalPages(0);
+      setIsCurrentPages(0);
     }
-  }, []);
+
+    return () => {
+      ignore = true;
+    };
+  }, [searchParams]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> =
-    useDebouncedCallback(async (event) => {
+    useDebouncedCallback((event) => {
       const value = event.target.value;
       const params = new URLSearchParams(searchParams);
+      params.set("page", "1");
       if (value) {
         params.set("query", value);
-        fetchData(params);
       } else {
         params.delete("query");
         setIsData([]);
@@ -100,6 +121,11 @@ export default function Search() {
           })}
         </div>
       )}
+      <Pagination
+        currentPage={isCurrentPages}
+        totalPages={isTotalPages}
+        customQuery={searchParams.get("query")?.toString()}
+      />
     </>
   );
 }

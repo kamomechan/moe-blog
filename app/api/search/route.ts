@@ -4,18 +4,33 @@ import { NextRequest, NextResponse } from "next/server";
 export function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get("query");
-  if (!query) {
+  const page = searchParams.get("page");
+
+  if (!query || !page) {
     return NextResponse.json(
-      { error: "Query parameter 'query' is required." },
+      { error: "Query parameters 'query' and 'page' are required." },
       { status: 400 }
     );
   }
+
   const result = preview
     .map((item) => item.data)
     .filter((article) => {
       return (
-        article.title.includes(query) || article.description.includes(query)
+        article.title.toLowerCase().includes(query.toLowerCase()) ||
+        article.description.toLowerCase().includes(query.toLowerCase())
       );
     });
-  return NextResponse.json(JSON.stringify(result), { status: 200 });
+
+  const itemsPerPage = Number(process.env.ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(result.length / itemsPerPage);
+  const currentPage = Number(page);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const sliceResult = result.slice(startIndex, endIndex);
+
+  return NextResponse.json(
+    { data: JSON.stringify(sliceResult), totalPages: totalPages },
+    { status: 200 }
+  );
 }
