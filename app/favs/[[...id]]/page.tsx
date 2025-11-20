@@ -64,21 +64,21 @@ export default async function Page(props: {
                 <div className="font-medium">
                   <a
                     href={`${vndb}${entry.id}`}
-                    className="hover:underline line-clamp-1"
+                    className="hover:underline line-clamp-1 dark:text-[#c1c1c1]"
                   >
                     {entry.vn.alttitle || entry.vn.title}
                   </a>
                 </div>
-                <div className="mt-[3vw] text-[#3057b4] lg:mt-[1vw] line-clamp-1">
+                <div className="mt-[3vw] text-[#3057b4] lg:mt-[1vw] line-clamp-1 dark:text-[#819ee3]">
                   {entry.vn.developers
                     ?.map((item) => item.original || item.name)
                     ?.join("/") || ""}
                 </div>
-                <div className="mt-[3vw] text-[#535353] lg:mt-[1vw]">
+                <div className="mt-[3vw] text-[#535353] lg:mt-[1vw] dark:text-[#9d9d9d]">
                   {entry.vn.released}
                 </div>
                 <div
-                  className="line-clamp-5 mt-[3vw] text-[#5b5b5b] lg:mt-[1vw] lg:line-clamp-10"
+                  className="line-clamp-5 mt-[3vw] text-[#5b5b5b] lg:mt-[1vw] lg:line-clamp-10 dark:text-[#9d9d9d]"
                   dangerouslySetInnerHTML={{
                     __html: generateFormatNotes(entry.vn.description) || "",
                   }}

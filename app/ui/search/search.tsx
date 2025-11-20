@@ -78,7 +78,7 @@ export default function Search() {
           search
         </label>
         <input
-          className="w-[86vw] m-[12vw_auto_12vw_auto] bg-[#a7c4dc69] block rounded-[5vw] py-[2vw] pl-[12vw] lg:p-[0.8vw_0_0.8vw_3vw] lg:w-[48vw] lg:m-[5vw_auto] lg:rounded-[2vw]"
+          className="w-[86vw] m-[12vw_auto_12vw_auto] bg-[#a7c4dc69] block rounded-[5vw] py-[2vw] pl-[12vw] lg:p-[0.8vw_0_0.8vw_3vw] lg:w-[48vw] lg:m-[5vw_auto] lg:rounded-[2vw] dark:bg-[#5e707d69] dark:text-[#ccc]"
           id="search"
           placeholder="Search posts..."
           onChange={handleChange}
@@ -90,9 +90,8 @@ export default function Search() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-5 absolute top-[50%] -translate-y-[50%] left-[10vw] lg:left-[27vw]"
+          className="size-5 absolute top-[50%] -translate-y-[50%] left-[10vw] lg:left-[27vw] text-[#6e6e6e] dark:text-[#9f9f9f]"
           aria-label="search icon"
-          color="#6e6e6e"
         >
           <path
             strokeLinecap="round"
@@ -110,10 +109,10 @@ export default function Search() {
                 key={article.title}
                 className="relative rounded-[1.3vw] shadow-[0_2.6041666667vw_2.6041666667vw_rgba(71,80,104,.14)] lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:hover:opacity-40 lg:transition-opacity lg:duration-300"
               >
-                <div className="text-[#445f86] text-center text-[5.6vw] line-clamp-2 m-[6.6vw_2vw] lg:text-[1.6vw] lg:text-[#445F86] lg:m-[2.6vw_2vw]">
+                <div className="text-[#445f86] text-center text-[5.6vw] line-clamp-2 m-[6.6vw_2vw] lg:text-[1.6vw] lg:text-[#445F86] lg:m-[2.6vw_2vw] dark:text-[#718db7]">
                   {article.title}
                 </div>
-                <div className="absolute right-[2vw] bottom-[1vw] text-[#6c5b67] text-[3.5vw] lg:text-[1vw] lg:bottom-[0.4vw] lg:right-[1vw]">
+                <div className="absolute right-[2vw] bottom-[1vw] text-[#6c5b67] text-[3.5vw] lg:text-[1vw] lg:bottom-[0.4vw] lg:right-[1vw] dark:text-[#ae97a8]">
                   {article.date}
                 </div>
               </Link>
