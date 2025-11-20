@@ -50,7 +50,7 @@ export default async function Home(props: {
               key={article.title}
               className="relative rounded-[1.3vw] shadow-[0_2.6041666667vw_2.6041666667vw_rgba(71,80,104,.14)] lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:hover:opacity-40 lg:transition-opacity lg:duration-300"
             >
-              <div className="text-[#445f86] text-center text-[5.6vw] line-clamp-2 m-[6.6vw_2vw] lg:text-[1.6vw] lg:text-[#445F86] lg:m-[2.6vw_2vw] dark:text-[#718db7]">
+              <div className="text-[#445f86] text-center text-[5.6vw] line-clamp-2 m-[6.6vw_2vw] lg:text-[1.6vw] lg:text-[#445F86] lg:m-[2.6vw_2vw] dark:text-[#7893bd]">
                 {article.title}
               </div>
               <div className="absolute right-[2vw] bottom-[1vw] text-[#6c5b67] text-[3.5vw] lg:text-[1vw] lg:bottom-[0.4vw] lg:right-[1vw] dark:text-[#ae97a8]">

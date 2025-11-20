@@ -25,10 +25,18 @@ export default function Pagination({
       {allPages.length > 1 &&
         allPages.map((page, index) => {
           if (page === "..." && index === 0) {
-            return <span key={"left-ellipsis"}>{page}</span>;
+            return (
+              <span key={"left-ellipsis"} className="dark:text-[#9dabcc]">
+                {page}
+              </span>
+            );
           }
           if (page === "..." && index === allPages.length - 1) {
-            return <span key={"right-ellipsis"}>{page}</span>;
+            return (
+              <span key={"right-ellipsis"} className="dark:text-[#9dabcc]">
+                {page}
+              </span>
+            );
           }
 
           let href;
@@ -60,11 +68,11 @@ export default function Pagination({
               className={clsx(
                 "text-[4.4vw] w-[9.1vw] h-[9.1vw] m-[0_1.9vw] flex items-center justify-center lg:w-[2.3vw] lg:h-[2.3vw] lg:text-[1vw] lg:m-[0_1.2vw]",
                 {
-                  "bg-[#a8d8ff57] text-[#0d67ae] rounded-[100px] pointer-events-none":
+                  "bg-[#a8d8ff57] text-[#0d67ae] rounded-[100px] pointer-events-none dark:bg-[#4a708f57] dark:text-[#d0d0d0]":
                     page === currentPage,
                 },
                 {
-                  "text-[#455374]": page !== currentPage,
+                  "text-[#455374] dark:text-[#9dabcc]": page !== currentPage,
                 }
               )}
             >
