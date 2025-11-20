@@ -15,14 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       {/* Add inline script in `head` to avoid FOUC */}
       <head>
         <script
           dangerouslySetInnerHTML={{ __html: `(${toggleTheme})()` }}
         ></script>
       </head>
-      <body className="bg-[url(/background.webp)] bg-cover bg-no-repeat bg-fixed lg:bg-[url(/background-desktop.webp)]">
+      <body className="bg-[url(/background.webp)] bg-cover bg-no-repeat bg-fixed lg:bg-[url(/background-desktop.webp)] dark:bg-[#111]">
         <header>
           <Nav />
         </header>

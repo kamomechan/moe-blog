@@ -23,13 +23,13 @@ export default function Nav() {
   return (
     <nav>
       <button
-        className="fixed top-[1.8vw] right-[1.8vw] w-[16vw] h-[16vw] bg-[#a8d8ff] z-20 rounded-[50%] cursor-pointer hover:scale-95 hover:opacity-90 transition-[scale,opacity] duration-300 lg:w-20 lg:h-20 lg:top-3 lg:right-3"
+        className="fixed top-[1.8vw] right-[1.8vw] w-[16vw] h-[16vw] bg-[#a8d8ff] z-20 rounded-[50%] cursor-pointer hover:scale-95 hover:opacity-90 transition-[scale,opacity] duration-300 lg:w-20 lg:h-20 lg:top-3 lg:right-3 dark:bg-[#3c5971]"
         onClick={toggleSideBar}
         aria-label="Navigation menu"
       >
         <div
           className={clsx(
-            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300",
+            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300 dark:bg-[#b1b5bd]",
             {
               "top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2": isOpen,
               "rotate-45": isOpen,
@@ -41,7 +41,7 @@ export default function Nav() {
         ></div>
         <div
           className={clsx(
-            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300",
+            "absolute h-0.5 w-[40%] bg-white transition-transform duration-300 dark:bg-[#b1b5bd]",
             {
               "top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2": isOpen,
               "-rotate-45": isOpen,
@@ -64,7 +64,7 @@ export default function Nav() {
       ></div>
       <div
         className={clsx(
-          "flex flex-col bg-[#cce1ff] w-[75vw] h-screen fixed z-10 -right-full pt-[26vw] transition-[right] duration-500 lg:w-96 lg:pt-40",
+          "flex flex-col bg-[#cce1ff] w-[75vw] h-screen fixed z-10 -right-full pt-[26vw] transition-[right] duration-500 lg:w-96 lg:pt-40 dark:bg-[#1d293e]",
           {
             "right-0": isOpen,
           }
@@ -75,7 +75,7 @@ export default function Nav() {
             href={link.href}
             key={link.name}
             className={clsx(
-              "group mt-[9vw] text-[5vw] text-[#47638a] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px]"
+              "group mt-[9vw] text-[5vw] text-[#47638a] tracking-[0.04em] pl-[21vw] lg:pl-28 lg:mt-10 lg:text-[20px] dark:text-[#b1b5bd]"
             )}
             onClick={toggleSideBar}
           >

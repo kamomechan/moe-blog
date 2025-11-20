@@ -11,7 +11,8 @@ export default function Theme() {
     <div className="flex justify-around m-[16vw_auto] bg-[#ffffff40] w-[40vw] rounded-[7vw] p-[1vw_0] lg:m-[3vw_auto] lg:p-[0.2vw_0] lg:w-[10vw]">
       <button
         className={clsx("p-[2vw] lg:p-[0.5vw]", {
-          "bg-[#bad6ff] rounded-[7vw]": currentTheme === "light",
+          "bg-[#bad6ff] rounded-[7vw] dark:bg-[#8599b7]":
+            currentTheme === "light",
         })}
         aria-label="Switch to light theme"
         onClick={() => {
@@ -37,7 +38,7 @@ export default function Theme() {
       </button>
       <button
         className={clsx("p-[2vw] lg:p-[0.5vw]", {
-          "bg-[#bad6ff] rounded-[7vw]": currentTheme === null,
+          "bg-[#bad6ff] rounded-[7vw] dark:bg-[#8599b7]": currentTheme === null,
         })}
         aria-label="Switch to system theme"
         onClick={() => {
@@ -63,7 +64,8 @@ export default function Theme() {
       </button>
       <button
         className={clsx("p-[2vw] lg:p-[0.5vw]", {
-          "bg-[#bad6ff] rounded-[7vw]": currentTheme === "dark",
+          "bg-[#bad6ff] rounded-[7vw] dark:bg-[#8599b7]":
+            currentTheme === "dark",
         })}
         aria-label="Switch to dark theme"
         onClick={() => {
