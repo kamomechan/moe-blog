@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "./ui/nav";
+import { toggleTheme } from "./lib/utils";
 
 export const metadata: Metadata = {
   title: "moe-blog",
@@ -15,6 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* Add inline script in `head` to avoid FOUC */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: `(${toggleTheme})()` }}
+        ></script>
+      </head>
       <body className="bg-[url(/background.webp)] bg-cover bg-no-repeat bg-fixed lg:bg-[url(/background-desktop.webp)]">
         <header>
           <Nav />

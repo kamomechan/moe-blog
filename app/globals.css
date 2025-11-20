@@ -5,3 +5,4 @@
   --tw-prose-quote-borders: #8aa3d4;
   --tw-prose-hr: #b0abac;
 }
+@custom-variant dark (&:where(.dark, .dark *));

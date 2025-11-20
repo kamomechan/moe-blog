@@ -1,5 +1,11 @@
 import Search from "@/app/ui/search/search";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search",
+  description: "Search posts...",
+};
 
 export default function Page() {
   return (

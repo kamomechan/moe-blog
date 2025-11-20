@@ -45,4 +45,13 @@ const generateFormatNotes = (notes: string | null) => {
   return `<blockquote>${formattedNotes}</blockquote>`;
 };
 
-export { generatePagination, generateFormatNotes };
+const toggleTheme = () => {
+  document.documentElement.classList.toggle(
+    "dark",
+    localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+  );
+};
+
+export { generatePagination, generateFormatNotes, toggleTheme };

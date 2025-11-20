@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import Theme from "./theme";
 
 const links = [
   { name: "Home", href: "/" },
@@ -90,6 +91,7 @@ export default function Nav() {
             {link.name}
           </Link>
         ))}
+        <Theme />
       </div>
     </nav>
   );
