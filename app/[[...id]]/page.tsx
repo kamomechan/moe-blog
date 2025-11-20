@@ -39,7 +39,7 @@ export default async function Home(props: {
 
   return (
     <>
-      <h1 className="text-center text-[13vw] text-[#3f80b5] pt-[17.8vw] lg:text-[5.2vw] lg:pt-[2.9vw]">
+      <h1 className="text-center text-[13vw] text-[#3f80b5] pt-[17.8vw] lg:text-[5.2vw] lg:pt-[2.9vw] lg:dark:text-[#4284b9]">
         Posts
       </h1>
       <div className="grid mt-[6.5vw] mb-[10vw] ml-auto mr-auto w-[89vw] grid-cols-[1fr] auto-rows-[minmax(30vw,1fr)] gap-y-[10vw] lg:gap-[5vw] lg:grid-cols-[repeat(2,1fr)] lg:auto-rows-[minmax(8vw,1fr)] lg:w-[77vw] lg:mt-[2.5vw] lg:mb-[5vw]">

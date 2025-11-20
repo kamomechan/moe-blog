@@ -19,7 +19,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
     <aside aria-label="Table of content">
       <nav>
         <button
-          className="fixed z-8 right-[1vw] bottom-[22.5vw] p-[1.5vw] rounded-[7vw] bg-[#8aa3c6c9] lg:hidden"
+          className="fixed z-8 right-[1vw] bottom-[22.5vw] p-[1.5vw] rounded-[7vw] bg-[#8aa3c6c9] lg:hidden dark:bg-[#3c5971]"
           onClick={toggleToc}
           aria-label="Table Of Content button"
         >
@@ -29,7 +29,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-[1.8rem] text-white"
+            className="size-[1.8rem] text-white dark:text-[#b1b5bd]"
           >
             <path
               strokeLinecap="round"
@@ -53,7 +53,7 @@ export default function Toc({ head }: { head: HeadingType[] }) {
 
             <div
               className={clsx(
-                "fixed w-[89vw] max-h-[58vh] rounded-2xl bg-[#cce1ff] -right-full top-[21vh] z-4 flex flex-col overflow-auto pt-[4.5vw] pb-[4.5vw] transition-[right] duration-500 lg:right-[1.5vw] lg:w-[22vw] lg:bg-transparent lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:max-h-[47vh] lg:top-[30vh] lg:z-5 lg:p-[1vw_0]",
+                "fixed w-[89vw] max-h-[58vh] rounded-2xl bg-[#cce1ff] -right-full top-[21vh] z-4 flex flex-col overflow-auto pt-[4.5vw] pb-[4.5vw] transition-[right] duration-500 lg:right-[1.5vw] lg:w-[22vw] lg:bg-transparent lg:shadow-[0_1.0416666667vw_1.0416666667vw_rgba(71,80,104,.14)] lg:max-h-[47vh] lg:top-[30vh] lg:z-5 lg:p-[1vw_0] dark:bg-[#1d293e] lg:dark:bg-transparent dark:shadow-[0_2.6041666667vw_3.6041666667vw_rgba(71,80,104,.34)]",
                 {
                   "right-[5.5vw] lg:right-[1.5vw]": isOpen,
                 }
@@ -68,12 +68,14 @@ export default function Toc({ head }: { head: HeadingType[] }) {
                     href={`#${id}`}
                     key={title}
                     className={clsx(
-                      " text-[#47638a] p-[4.5vw_0_4.5vw_10vw] lg:p-[1vw_0_1vw_3vw] lg:text-[#4a6882]",
+                      "text-[#47638a] p-[4.5vw_0_4.5vw_10vw] lg:p-[1vw_0_1vw_3vw] lg:text-[#4a6882] ",
                       {
                         "text-[5vw] lg:text-[1.1vw]": depth === 2,
                         "text-[4.5vw] pl-[15vw] lg:text-[1vw] lg:pl-[4vw]":
                           depth === 3,
-                        "font-bold": id === activeHeading?.id,
+                        "font-bold dark:text-[#59769f] lg:dark:text-[#819ec8]":
+                          id === activeHeading?.id,
+                        "dark:text-[#b1b5bd]": id !== activeHeading?.id,
                       }
                     )}
                     onClick={toggleToc}
