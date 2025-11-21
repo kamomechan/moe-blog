@@ -4,6 +4,7 @@ import headings from "@/app/lib/headings";
 import Toc from "@/app/ui/post/toc";
 import "@/app/ui/post/post.css";
 import ImgZoom from "@/app/ui/post/img-zoom";
+import Comments from "@/app/ui/post/comments";
 
 export const dynamicParams = false;
 
@@ -50,6 +51,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         </time>
       </article>
       <Toc head={head} />
+      {process.env.COMMENTS && <Comments />}
       <ImgZoom />
     </>
   );
