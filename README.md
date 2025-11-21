@@ -42,6 +42,43 @@ post page:
 
 - [ ] 评论功能 (打算使用 Postgres 作为数据库)
 
+## 部署
+
+### 克隆仓库
+
+```shell
+git clone https://codeberg.org/nokutan/moe-blog.git
+```
+
+或者
+
+```shell
+git clone https://github.com/kamomechan/moe-blog.git
+```
+
+### 运行环境
+
+下载 [nodejs](https://nodejs.org/en/download) 最新的 LTS 版本
+
+### 依赖
+
+```shell
+npm i -g pnpm
+pnpm i
+```
+
+### 部署到开发环境
+
+```shell
+pnpm run dev
+```
+
+### 部署到生产环境
+
+```shell
+pnpm start
+```
+
 ## 日志
 
 - 2025-11-08 本来想使用 mdx 的，不过不支持直接导入相对路径的图片，暂且放弃，主要是因为在 markdown 文件中使用 import 有点麻烦，改天再试试，如果对 lighthouse 提升较大就使用
@@ -83,6 +120,8 @@ post page:
 - 2025-11-19 新增了搜索框，首先对于个人 blog 而言，SSG 渲染更适合，对于实现的搜索页面而言，这需要排除 `searchParams props`，这意味我们可以使用 `useSearchParams hooks` 来更新搜索参数。虽说我们也可以使用路径参数的 `params props` 替代，以减少客户端包体积，但是这会导致路径污染，而简单的首页分页使用 `params props` 来获取页码参数却是最佳实践，但是搜索页面不太合适。另外就是搜索数据如何筛选处理的问题，既然我们根据权衡选择了 `hooks`,那么就变成了客户端组件，这时我们需要从客户端获取数据，有两个选择，一个是选择从客户端获取服务端预构建的索引数据 json 文件，并筛选显示；另一个选择是构建一个路由 api，传递搜索参数，服务端处理数据筛选后返回给客户端渲染。如何选择呢，首先回归到问题本质，选择 SSG 是为了 FCP (First Contentful Paint) 速度，而剩下的两个选择是否有一个影响呢，第一个选项需要客户端获取 json 索引文件可能会影响，而第二个选项只会在执行搜索时才会执行，那么第二个选择是权衡后比较适合的选择，即 SSG + api route 混合渲染(Hybrid rendering)
 
 - 2025-11-20 添加了切换主题的按钮，之后再为每个页面添加样式
+
+- 2025-11-21 添加了评论 UI，另外把 [github](https://github.com/kamomechan/) 的代码迁移到了 [codeberg](https://codeberg.org/nokutan)，当然两个远程存储库之间会同步的，不过之后如果有新项目的话就不一定了
 
 ## License
 

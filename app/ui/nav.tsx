@@ -11,7 +11,7 @@ const links = [
   { name: "Favs", href: "/favs" },
   { name: "Search", href: "/search" },
   { name: "RSS", href: "/rss" },
-  { name: "Code", href: "https://github.com/kamomechan/moe-blog" },
+  { name: "Code", href: "https://codeberg.org/nokutan/moe-blog" },
 ];
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
