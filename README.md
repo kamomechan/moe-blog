@@ -76,6 +76,7 @@ pnpm run dev
 ### 部署到生产环境
 
 ```shell
+pnpm run build
 pnpm start
 ```
 
