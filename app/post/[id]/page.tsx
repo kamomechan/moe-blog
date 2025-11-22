@@ -51,7 +51,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         </time>
       </article>
       <Toc head={head} />
-      {process.env.COMMENTS && <Comments />}
+      {process.env.COMMENTS && <Comments id={id} />}
       <ImgZoom />
     </>
   );

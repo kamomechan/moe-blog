@@ -67,6 +67,15 @@ npm i -g pnpm
 pnpm i
 ```
 
+### 配置
+
+根据`.env.example`注释进行配置
+
+```shell
+cp .env.example .env
+vim .env
+```
+
 ### 部署到开发环境
 
 ```shell
@@ -102,10 +111,6 @@ pnpm start
 
 - cy-py\*S+ty
 
-- px​=(cx​−tx​​)/S
-
-- py​=(cy​−ty)/S​​
-
 - tx′​=cx​−((cx​−tx​​)/S)×S′
 
 - ty′​=cy​−((cy​−ty​​)/S)×S′
@@ -123,6 +128,8 @@ pnpm start
 - 2025-11-20 添加了切换主题的按钮，之后再为每个页面添加样式
 
 - 2025-11-21 添加了评论 UI，另外把 [github](https://github.com/kamomechan/) 的代码迁移到了 [codeberg](https://codeberg.org/nokutan)，当然两个远程存储库之间会同步的，不过之后如果有新项目的话就不一定了
+
+- 2025-11-22 添加了嵌套评论的样式
 
 ## License
 

@@ -35,6 +35,20 @@ const comments = [
     created_at: "2025-06-01",
   },
   {
+    id: "410544b2-4001-4271-9855-fec4b6a64422",
+    post_id: "moe-blog",
+    parent_id: "410544b2-4001-4271-9855-fec4b6a6442c",
+    content: "かわいい、お持ち帰り〜",
+    created_at: "2025-06-01",
+  },
+  {
+    id: "410544b2-4001-4271-9855-fec4b6a64421",
+    post_id: "moe-blog",
+    parent_id: "410544b2-4001-4271-9855-fec4b6a6442d",
+    content: "かわいい、お持ち帰り〜",
+    created_at: "2025-05-01",
+  },
+  {
     id: "410544b2-4001-4271-9855-fec4b6a6442f",
     post_id: "vndb-rss",
     parent_id: null,
