@@ -1,4 +1,5 @@
 import { comments } from "@/app/lib/placeholder-data";
+import LocalizedDate from "./localized-date";
 
 export default function Comments(props: { id: string }) {
   return (
@@ -57,7 +58,7 @@ export default function Comments(props: { id: string }) {
                 >
                   <div className="text-[#364153]">{item.content}</div>
                   <span className="text-[0.8rem] text-[#505e73]">
-                    {item.created_at}
+                    <LocalizedDate date={new Date(item.created_at)} />
                   </span>
                   <span className="text-[0.8rem] text-[#2e618a] ml-[4vw] lg:ml-[1vw]">
                     reply
@@ -76,7 +77,7 @@ export default function Comments(props: { id: string }) {
                           {entry.content}
                         </div>
                         <span className="text-[0.7rem] text-[#505e73]">
-                          {entry.created_at}
+                          <LocalizedDate date={new Date(entry.created_at)} />
                         </span>
                       </div>
                     );
