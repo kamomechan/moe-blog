@@ -1,0 +1,49 @@
+// import sql from "@/app/lib/db";
+// import { comments } from "../lib/placeholder-data";
+
+// async function seedComments() {
+//   await sql`
+//     CREATE TABLE IF NOT EXISTS comments (
+//       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//       post_id VARCHAR(255) NOT NULL,
+//       parent_id UUID DEFAULT NULL REFERENCES comments(id) ON DELETE CASCADE,
+//       content TEXT NOT NULL,
+//       created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+//     );
+//     `;
+//   // Insert parents_id first
+//   await Promise.all(
+//     comments
+//       .filter((item) => !item.parent_id)
+//       .map((comment) => {
+//         return sql`
+//       INSERT INTO comments (id,post_id,parent_id,content,created_at)
+//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.content},${comment.created_at})
+//       ON CONFLICT (id) DO NOTHING;
+//       `;
+//       })
+//   );
+//   await Promise.all(
+//     comments
+//       .filter((item) => item.parent_id)
+//       .map((comment) => {
+//         return sql`
+//       INSERT INTO comments (id,post_id,parent_id,content,created_at)
+//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.content},${comment.created_at})
+//       ON CONFLICT (id) DO NOTHING;
+//       `;
+//       })
+//   );
+// }
+
+export async function GET() {
+  //   try {
+  //     await sql.begin(async (sql) => {
+  //       await seedComments();
+  //     });
+  //     return Response.json({ message: "Database seeded successfully" });
+  //   } catch (error) {
+  //     return Response.json({ error }, { status: 500 });
+  //   }
+  return Response.json({ message: "dev..." });
+}

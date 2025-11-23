@@ -30,9 +30,10 @@ export default function LocalizedDate({ date }: { date: Date }) {
   if (hoursDiff < 24 && date.getDay() === currentDate.getDay()) {
     result = `${formattedDate.slice(11, 16)}`; // hh:mm
   } else if (hoursDiff < 24) {
-    result = `${hoursDiff} hours ago`;
+    result =
+      hoursDiff === 1 ? `${hoursDiff} hour ago` : `${hoursDiff} hours ago`;
   } else if (dayDiff < 4) {
-    result = `${dayDiff} days ago`;
+    result = dayDiff === 1 ? `${dayDiff} day ago` : `${dayDiff} days ago`;
   } else if (yearDiff === 0) {
     result = formattedDate.slice(5, 10); // mm-dd
   } else {

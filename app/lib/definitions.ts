@@ -45,4 +45,12 @@ interface VNDBType {
   results: ResultType[];
 }
 
-export type { MetadataType, HeadingType, VNDBType };
+interface CommentType {
+  id: string;
+  post_id: string;
+  parent_id: string | null;
+  content: string;
+  created_at: string;
+}
+
+export type { MetadataType, HeadingType, VNDBType, CommentType };
