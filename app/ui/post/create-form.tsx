@@ -10,6 +10,7 @@ export default function Form(props: { postId: string }) {
     addCommentWithPostId,
     initialState
   );
+
   return (
     <form action={formAction}>
       <label htmlFor="comment" className="sr-only">
@@ -31,6 +32,16 @@ export default function Form(props: { postId: string }) {
           className="text-[#8e4141] text-sm ml-[1vw]"
         >
           {state.errors.content.map((item) => item)}
+        </p>
+      )}
+      <input type="hidden" name="parent_id" id="parent_id" />
+      {state?.errors?.parent_id && (
+        <p
+          id="parent_id"
+          aria-live="polite"
+          className="text-[#8e4141] text-sm ml-[1vw]"
+        >
+          {state.errors.parent_id.map((item) => item)}
         </p>
       )}
       <div className="flex justify-end">

@@ -7,7 +7,9 @@ import { revalidatePath } from "next/cache";
 const FormSchema = z.object({
   id: z.string(),
   post_id: z.string(),
-  parent_id: z.optional(z.string()),
+  parent_id: z.nullable(
+    z.uuid({ version: "v4", error: "If you are a bot, please leave :(" })
+  ),
   content: z
     .string({
       error: (issue) =>
@@ -39,6 +41,7 @@ export async function addComment(
 ) {
   const rawFormData = {
     content: formData.get("content"),
+    parent_id: formData.get("parent_id") || null, // may be ""
   };
   const validatedFields = AddComment.safeParse(rawFormData);
 
