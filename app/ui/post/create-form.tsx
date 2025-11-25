@@ -1,7 +1,7 @@
 "use client";
 
 import { addComment, type State } from "@/app/lib/actions";
-import { useActionState } from "react";
+import { MouseEventHandler, useActionState, useRef } from "react";
 
 export default function Form(props: { postId: string }) {
   const addCommentWithPostId = addComment.bind(null, props.postId);
@@ -10,6 +10,15 @@ export default function Form(props: { postId: string }) {
     addCommentWithPostId,
     initialState
   );
+  const parentRef = useRef<HTMLInputElement>(null);
+  // Cancel reply
+  const handleTipsClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    const tipsElement = event.currentTarget;
+    tipsElement.textContent = "";
+    const parentElement = parentRef.current;
+    if (!parentElement) return;
+    parentElement.value = "";
+  };
 
   return (
     <form action={formAction}>
@@ -34,7 +43,7 @@ export default function Form(props: { postId: string }) {
           {state.errors.content.map((item) => item)}
         </p>
       )}
-      <input type="hidden" name="parent_id" id="parent_id" />
+      <input type="hidden" name="parent_id" id="parent_id" ref={parentRef} />
       {state?.errors?.parent_id && (
         <p
           id="parent_id"
@@ -44,6 +53,14 @@ export default function Form(props: { postId: string }) {
           {state.errors.parent_id.map((item) => item)}
         </p>
       )}
+      <div className="relative flex justify-end mr-[10vw] lg:mr-[3vw]">
+        <button
+          id="tips"
+          type="button"
+          className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute"
+          onClick={handleTipsClick}
+        ></button>
+      </div>
       <div className="flex justify-end">
         <button type="submit">
           <svg
@@ -54,7 +71,7 @@ export default function Form(props: { postId: string }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="size-6 text-[#3a7aae]"
+            className="size-6 text-[#3a7aae] hover:text-[#cc2199]"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />

@@ -23,6 +23,8 @@ export default function CommentsList({
       behavior: "smooth",
       block: "center",
     });
+    const tipsElement = document.getElementById("tips") as HTMLButtonElement;
+    tipsElement.textContent = "Click me to cancel reply.";
     setTimeout(() => {
       commentElement.focus();
     }, 500);
