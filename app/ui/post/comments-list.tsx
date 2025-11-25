@@ -2,11 +2,14 @@
 import { CommentType } from "@/app/lib/definitions";
 import LocalizedDate from "@/app/ui/post/localized-date";
 import { MouseEventHandler } from "react";
+import DeleteComment from "./buttons";
 
 export default function CommentsList({
   comments,
+  postId,
 }: {
   comments: CommentType[];
+  postId: string;
 }) {
   const handleReplyClick: MouseEventHandler<HTMLSpanElement> = (event) => {
     const currentTarget = event.currentTarget;
@@ -34,7 +37,9 @@ export default function CommentsList({
     event
   ) => {
     const menuElement = event.currentTarget;
-    const optionsElement = menuElement.nextElementSibling as HTMLButtonElement;
+    const optionsElement = menuElement.nextElementSibling?.querySelector(
+      "button"
+    ) as HTMLButtonElement;
     optionsElement.classList.toggle("hidden");
   };
 
@@ -82,9 +87,7 @@ export default function CommentsList({
                       />
                     </svg>
                   </button>
-                  <button className="absolute bottom-0 right-[18vw] text-[0.8rem] bg-[#94abd885] text-[#364153] rounded-[3vw] p-[0.5vw_2vw] translate-x-[50%] hover:bg-[rgb(179_198_243)] hidden lg:right-[5vw] lg:p-[.15vw_.5vw]">
-                    delete
-                  </button>
+                  <DeleteComment id={item.id} postId={postId} />
                 </div>
               </div>
               {/* Render replies/nested comments for the current entry */}
@@ -122,9 +125,7 @@ export default function CommentsList({
                             />
                           </svg>
                         </button>
-                        <button className="absolute bottom-0 right-[18vw] text-[0.8rem] bg-[#94abd885] text-[#364153] rounded-[3vw] p-[0.5vw_2vw] translate-x-[50%] hover:bg-[rgb(179_198_243)] hidden lg:right-[5vw] lg:p-[.15vw_.5vw]">
-                          delete
-                        </button>
+                        <DeleteComment id={entry.id} postId={postId} />
                       </div>
                     </div>
                   );

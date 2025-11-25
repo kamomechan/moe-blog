@@ -74,3 +74,15 @@ export async function addComment(
   }
   revalidatePath(`/post/${postId}`);
 }
+
+export async function deleteComment(id: string, postId: string) {
+  try {
+    await sql`
+    DELETE FROM comments WHERE id = ${id}
+  `;
+  } catch (error) {
+    console.error(error);
+  }
+
+  revalidatePath(`/post/${postId}`);
+}

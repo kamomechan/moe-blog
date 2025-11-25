@@ -11,7 +11,7 @@ export default async function Comments(props: { id: string }) {
         Comments
       </div>
       <Form postId={props.id} />
-      <CommentsList comments={comments} />
+      <CommentsList comments={comments} postId={props.id} />
     </div>
   );
 }
