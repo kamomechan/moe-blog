@@ -30,6 +30,14 @@ export default function CommentsList({
     }, 500);
   };
 
+  const handleCommentMenuClick: MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    const menuElement = event.currentTarget;
+    const optionsElement = menuElement.nextElementSibling as HTMLButtonElement;
+    optionsElement.classList.toggle("hidden");
+  };
+
   return (
     <div className="mt-[5vw] lg:mt-[3vw]">
       {comments
@@ -42,7 +50,7 @@ export default function CommentsList({
               <div
                 key={item.id}
                 id={item.id}
-                className="w-full mb-[2.5vw] lg:mb-[1vw]"
+                className="w-full mb-[2.5vw] lg:mb-[1vw] relative"
               >
                 <div className="text-[#364153]">{item.content}</div>
                 <span className="text-[0.8rem] text-[#505e73]">
@@ -54,6 +62,30 @@ export default function CommentsList({
                 >
                   reply
                 </button>
+                <div>
+                  <button
+                    className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw]"
+                    onClick={handleCommentMenuClick}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6 text-[#6f6c6c]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                      />
+                    </svg>
+                  </button>
+                  <button className="absolute bottom-0 right-[18vw] text-[0.8rem] bg-[#94abd885] text-[#364153] rounded-[3vw] p-[0.5vw_2vw] translate-x-[50%] hover:bg-[rgb(179_198_243)] hidden lg:right-[5vw] lg:p-[.15vw_.5vw]">
+                    delete
+                  </button>
+                </div>
               </div>
               {/* Render replies/nested comments for the current entry */}
               {comments.map((entry) => {
@@ -62,7 +94,7 @@ export default function CommentsList({
                     <div
                       key={entry.id}
                       id={entry.id}
-                      className="w-full m-[0_0_1vw_6vw] shadow-[-3px_0_0_0_#5597c7] pl-[1.5vw] lg:ml-[1.5vw] lg:pl-[0.5vw]"
+                      className="w-[70vw] m-[0_0_1vw_6vw] shadow-[-3px_0_0_0_#5597c7] pl-[1.5vw] lg:ml-[1.5vw] lg:pl-[0.5vw] relative lg:w-[40.5vw]"
                     >
                       <div className="text-[#364153] text-[.9rem]">
                         {entry.content}
@@ -70,6 +102,30 @@ export default function CommentsList({
                       <span className="text-[0.7rem] text-[#505e73]">
                         <LocalizedDate date={new Date(entry.created_at)} />
                       </span>
+                      <div>
+                        <button
+                          className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw]"
+                          onClick={handleCommentMenuClick}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6 text-[#6f6c6c]"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                            />
+                          </svg>
+                        </button>
+                        <button className="absolute bottom-0 right-[18vw] text-[0.8rem] bg-[#94abd885] text-[#364153] rounded-[3vw] p-[0.5vw_2vw] translate-x-[50%] hover:bg-[rgb(179_198_243)] hidden lg:right-[5vw] lg:p-[.15vw_.5vw]">
+                          delete
+                        </button>
+                      </div>
                     </div>
                   );
                 }
