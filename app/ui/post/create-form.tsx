@@ -28,7 +28,7 @@ export default function Form(props: { postId: string }) {
       <textarea
         name="content"
         id="comment"
-        className="w-full bg-[#ffffff63] rounded-[4vw] min-h-[32vw] p-[3vw] text-[#364153] lg:bg-[#a8d8ff40] lg:min-h-[9vw] lg:rounded-[2vw] lg:p-[1vw] "
+        className="w-full bg-[#ffffff63] rounded-[4vw] min-h-[32vw] p-[3vw] text-[#364153] lg:bg-[#a8d8ff40] lg:min-h-[9vw] lg:rounded-[2vw] lg:p-[1vw] dark:text-[#ccc] dark:bg-[#5e707d69]"
         placeholder="Please authenticate to leave a comment ><"
         aria-label="comment"
         required
@@ -62,7 +62,7 @@ export default function Form(props: { postId: string }) {
         ></button>
       </div>
       <div className="flex justify-end">
-        <button type="submit">
+        <button type="submit" aria-label="Submit Comment">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

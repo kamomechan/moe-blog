@@ -57,20 +57,24 @@ export default function CommentsList({
                 id={item.id}
                 className="w-full mb-[2.5vw] lg:mb-[1vw] relative"
               >
-                <div className="text-[#364153]">{item.content}</div>
-                <span className="text-[0.8rem] text-[#505e73]">
+                <div className="text-[#364153] dark:text-[#d1d5dc]">
+                  {item.content}
+                </div>
+                <span className="text-[0.8rem] text-[#505e73] dark:text-[#96a1b2]">
                   <LocalizedDate date={new Date(item.created_at)} />
                 </span>
                 <button
-                  className="text-[0.8rem] text-[#2e618a] ml-[4vw] lg:ml-[1vw] hover:text-[#cc2199]"
+                  className="text-[0.8rem] text-[#2e618a] ml-[4vw] lg:ml-[1vw] hover:text-[#cc2199] dark:text-[#528dbd] lg:dark:text-[#6aa6d7]"
                   onClick={handleReplyClick}
+                  aria-label="Reply to comment"
                 >
                   reply
                 </button>
                 <div>
                   <button
-                    className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw]"
+                    className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
                     onClick={handleCommentMenuClick}
+                    aria-label="Comment options"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -99,16 +103,17 @@ export default function CommentsList({
                       id={entry.id}
                       className="w-[70vw] m-[0_0_1vw_6vw] shadow-[-3px_0_0_0_#5597c7] pl-[1.5vw] lg:ml-[1.5vw] lg:pl-[0.5vw] relative lg:w-[40.5vw]"
                     >
-                      <div className="text-[#364153] text-[.9rem]">
+                      <div className="text-[#364153] text-[.9rem] dark:text-[#d1d5dc]">
                         {entry.content}
                       </div>
-                      <span className="text-[0.7rem] text-[#505e73]">
+                      <span className="text-[0.7rem] text-[#505e73] dark:text-[#96a1b2]">
                         <LocalizedDate date={new Date(entry.created_at)} />
                       </span>
                       <div>
                         <button
-                          className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw]"
+                          className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
                           onClick={handleCommentMenuClick}
+                          aria-label="Comment options"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
