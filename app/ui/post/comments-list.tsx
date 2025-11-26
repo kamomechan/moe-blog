@@ -1,15 +1,21 @@
 "use client";
 import { CommentType } from "@/app/lib/definitions";
 import LocalizedDate from "@/app/ui/post/localized-date";
-import { MouseEventHandler } from "react";
+import {
+  type Dispatch,
+  type MouseEventHandler,
+  type SetStateAction,
+} from "react";
 import DeleteComment from "./buttons";
 
 export default function CommentsList({
   comments,
-  postId,
+  setIsSuccess,
+  isSuccess,
 }: {
-  comments: CommentType[];
-  postId: string;
+  comments: CommentType[] | null;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
+  isSuccess: boolean;
 }) {
   const handleReplyClick: MouseEventHandler<HTMLSpanElement> = (event) => {
     const currentTarget = event.currentTarget;
@@ -45,100 +51,112 @@ export default function CommentsList({
 
   return (
     <div className="mt-[5vw] lg:mt-[3vw]">
-      {comments
-        .filter((item) => {
-          return item.parent_id === null;
-        })
-        .map((item, index) => {
-          return (
-            <div key={`comment-${index + 1}`} className="mb-[7vw] lg:mb-[2vw]">
+      {comments &&
+        comments
+          .filter((item) => {
+            return item.parent_id === null;
+          })
+          .map((item, index) => {
+            return (
               <div
-                key={item.id}
-                id={item.id}
-                className="w-full mb-[2.5vw] lg:mb-[1vw] relative"
+                key={`comment-${index + 1}`}
+                className="mb-[7vw] lg:mb-[2vw]"
               >
-                <div className="text-[#364153] dark:text-[#d1d5dc]">
-                  {item.content}
-                </div>
-                <span className="text-[0.8rem] text-[#505e73] dark:text-[#96a1b2]">
-                  <LocalizedDate date={new Date(item.created_at)} />
-                </span>
-                <button
-                  className="text-[0.8rem] text-[#2e618a] ml-[4vw] lg:ml-[1vw] hover:text-[#cc2199] dark:text-[#528dbd] lg:dark:text-[#6aa6d7]"
-                  onClick={handleReplyClick}
-                  aria-label="Reply to comment"
+                <div
+                  key={item.id}
+                  id={item.id}
+                  className="w-full mb-[2.5vw] lg:mb-[1vw] relative"
                 >
-                  reply
-                </button>
-                <div>
+                  <div className="text-[#364153] dark:text-[#d1d5dc]">
+                    {item.content}
+                  </div>
+                  <span className="text-[0.8rem] text-[#505e73] dark:text-[#96a1b2]">
+                    <LocalizedDate date={new Date(item.created_at)} />
+                  </span>
                   <button
-                    className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
-                    onClick={handleCommentMenuClick}
-                    aria-label="Comment options"
+                    className="text-[0.8rem] text-[#2e618a] ml-[4vw] lg:ml-[1vw] hover:text-[#cc2199] dark:text-[#528dbd] lg:dark:text-[#6aa6d7]"
+                    onClick={handleReplyClick}
+                    aria-label="Reply to comment"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6 text-[#6f6c6c]"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                      />
-                    </svg>
+                    reply
                   </button>
-                  <DeleteComment id={item.id} postId={postId} />
-                </div>
-              </div>
-              {/* Render replies/nested comments for the current entry */}
-              {comments.map((entry) => {
-                if (entry.parent_id === item.id) {
-                  return (
-                    <div
-                      key={entry.id}
-                      id={entry.id}
-                      className="w-[70vw] m-[0_0_1vw_6vw] shadow-[-3px_0_0_0_#5597c7] pl-[1.5vw] lg:ml-[1.5vw] lg:pl-[0.5vw] relative lg:w-[40.5vw]"
+                  <div>
+                    <button
+                      className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
+                      onClick={handleCommentMenuClick}
+                      aria-label="Comment options"
                     >
-                      <div className="text-[#364153] text-[.9rem] dark:text-[#d1d5dc]">
-                        {entry.content}
-                      </div>
-                      <span className="text-[0.7rem] text-[#505e73] dark:text-[#96a1b2]">
-                        <LocalizedDate date={new Date(entry.created_at)} />
-                      </span>
-                      <div>
-                        <button
-                          className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
-                          onClick={handleCommentMenuClick}
-                          aria-label="Comment options"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="size-6 text-[#6f6c6c]"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 text-[#6f6c6c]"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                        />
+                      </svg>
+                    </button>
+                    <DeleteComment
+                      id={item.id}
+                      setIsSuccess={setIsSuccess}
+                      isSuccess={isSuccess}
+                    />
+                  </div>
+                </div>
+                {/* Render replies/nested comments for the current entry */}
+                {comments.map((entry) => {
+                  if (entry.parent_id === item.id) {
+                    return (
+                      <div
+                        key={entry.id}
+                        id={entry.id}
+                        className="w-[70vw] m-[0_0_1vw_6vw] shadow-[-3px_0_0_0_#5597c7] pl-[1.5vw] lg:ml-[1.5vw] lg:pl-[0.5vw] relative lg:w-[40.5vw]"
+                      >
+                        <div className="text-[#364153] text-[.9rem] dark:text-[#d1d5dc]">
+                          {entry.content}
+                        </div>
+                        <span className="text-[0.7rem] text-[#505e73] dark:text-[#96a1b2]">
+                          <LocalizedDate date={new Date(entry.created_at)} />
+                        </span>
+                        <div>
+                          <button
+                            className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
+                            onClick={handleCommentMenuClick}
+                            aria-label="Comment options"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                            />
-                          </svg>
-                        </button>
-                        <DeleteComment id={entry.id} postId={postId} />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="size-6 text-[#6f6c6c]"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                              />
+                            </svg>
+                          </button>
+                          <DeleteComment
+                            id={entry.id}
+                            setIsSuccess={setIsSuccess}
+                            isSuccess={isSuccess}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-          );
-        })}
+                    );
+                  }
+                })}
+              </div>
+            );
+          })}
     </div>
   );
 }

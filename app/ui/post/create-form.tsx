@@ -1,9 +1,20 @@
 "use client";
 
 import { addComment, type State } from "@/app/lib/actions";
-import { MouseEventHandler, useActionState, useRef } from "react";
+import {
+  type Dispatch,
+  type MouseEventHandler,
+  type SetStateAction,
+  useActionState,
+  useEffect,
+  useRef,
+} from "react";
 
-export default function Form(props: { postId: string }) {
+export default function Form(props: {
+  postId: string;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
+  isSuccess: boolean;
+}) {
   const addCommentWithPostId = addComment.bind(null, props.postId);
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(
@@ -19,6 +30,13 @@ export default function Form(props: { postId: string }) {
     if (!parentElement) return;
     parentElement.value = "";
   };
+
+  // Update state only on comment changes.
+  useEffect(() => {
+    if (state?.message?.includes("success")) {
+      props.setIsSuccess(!props.isSuccess);
+    }
+  }, [state]);
 
   return (
     <form action={formAction}>
@@ -59,6 +77,7 @@ export default function Form(props: { postId: string }) {
           type="button"
           className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute"
           onClick={handleTipsClick}
+          aria-label="tips"
         ></button>
       </div>
       <div className="flex justify-end">

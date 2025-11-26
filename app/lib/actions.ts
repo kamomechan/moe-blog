@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import sql from "./db";
-import { revalidatePath } from "next/cache";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -34,6 +33,10 @@ export type State = {
   message?: string | null;
 };
 
+export type DeleteState = {
+  message?: string | null;
+};
+
 export async function addComment(
   postId: string,
   prevState: State | undefined,
@@ -56,15 +59,23 @@ export async function addComment(
 
   try {
     if (parent_id) {
-      await sql`
-          INSERT INTO comments (post_id,parent_id,content)
-          VALUES (${postId},${parent_id},${content})
+      const result = await sql`
+        INSERT INTO comments (post_id,parent_id,content)
+        VALUES (${postId},${parent_id},${content})
+        RETURNING id
         `;
+      return {
+        message: `success: ${result[0].id}`,
+      };
     } else {
-      await sql`
-          INSERT INTO comments (post_id,content)
-          VALUES (${postId},${content})
+      const result = await sql`
+        INSERT INTO comments (post_id,content)
+        VALUES (${postId},${content})
+        RETURNING id
         `;
+      return {
+        message: `success: ${result[0].id}`,
+      };
     }
   } catch (error) {
     console.error(error);
@@ -72,17 +83,20 @@ export async function addComment(
       message: "Database error: Fail to add comment",
     };
   }
-  revalidatePath(`/post/${postId}`);
 }
 
-export async function deleteComment(id: string, postId: string) {
+export async function deleteComment(id: string, prevState: DeleteState) {
   try {
     await sql`
     DELETE FROM comments WHERE id = ${id}
   `;
+    return {
+      message: `success: ${id}`,
+    };
   } catch (error) {
     console.error(error);
+    return {
+      message: "Database error: Fail to delete comment",
+    };
   }
-
-  revalidatePath(`/post/${postId}`);
 }

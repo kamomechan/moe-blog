@@ -131,6 +131,8 @@ pnpm start
 
 - 2025-11-22 添加了嵌套评论的样式
 
+- 2025-11-26 为帖子页面的评论功能实现 ISR 渲染时遇到个问题，已提[issue](https://github.com/vercel/next.js/discussions/86503)，但未得到解决，目前使用 SSG + api route 混合渲染来作为替代方案，这样有个好处，如果将来~~有好多好多人~~评论可以实现 Load More，而不用担心一个静态页面在首次加载时包含体积过大的评论文本
+
 ## License
 
 GNU AGPLv3
