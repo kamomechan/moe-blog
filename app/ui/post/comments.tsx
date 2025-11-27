@@ -32,6 +32,8 @@ export default function Comments(props: { id: string }) {
         if (entry.isIntersecting) {
           setIsObserver(true);
           setIsSuccess(!isSuccess);
+          // Observe only on first entry to prevent repeated triggering
+          observer.disconnect();
         }
       });
     });
