@@ -53,4 +53,10 @@ interface CommentType {
   created_at: string;
 }
 
-export type { MetadataType, HeadingType, VNDBType, CommentType };
+interface UserType {
+  id: string;
+  username: string;
+  password: string;
+}
+
+export type { MetadataType, HeadingType, VNDBType, CommentType, UserType };

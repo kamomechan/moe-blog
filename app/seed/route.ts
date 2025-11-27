@@ -1,7 +1,12 @@
 // import sql from "@/app/lib/db";
 // import { comments } from "../lib/placeholder-data";
+// import bcrypt from "bcrypt";
 
 // async function seedComments() {
+//   await sql`
+//     DROP TABLE IF EXISTS comments
+//   `;
+
 //   await sql`
 //     CREATE TABLE IF NOT EXISTS comments (
 //       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -36,10 +41,31 @@
 //   );
 // }
 
+// async function seedUsers() {
+//   await sql`
+//     DROP TABLE IF EXISTS users
+//   `;
+
+//   await sql`
+//     CREATE TABLE IF NOT EXISTS users (
+//       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//       username VARCHAR(255) NOT NULL UNIQUE,
+//       password TEXT NOT NULL
+//     )
+//   `;
+
+//   const hashPassword = await bcrypt.hash(process.env.PASSWORD!, 10);
+//   await sql`
+//     INSERT INTO users (username,password)
+//     VALUES (${process.env.USERNAME!},${hashPassword})
+//   `;
+// }
+
 export async function GET() {
   //   try {
   //     await sql.begin(async (sql) => {
   //       await seedComments();
+  //       await seedUsers();
   //     });
   //     return Response.json({ message: "Database seeded successfully" });
   //   } catch (error) {

@@ -10,6 +10,7 @@ const links = [
   { name: "Home", href: "/" },
   { name: "Favs", href: "/favs" },
   { name: "Search", href: "/search" },
+  { name: "Login", href: "/login" },
   { name: "RSS", href: "/rss" },
   { name: "Code", href: "https://codeberg.org/nokutan/moe-blog" },
 ];

@@ -2,6 +2,9 @@
 
 import { z } from "zod";
 import sql from "./db";
+import bcrypt from "bcrypt";
+import type { UserType } from "./definitions";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -99,4 +102,55 @@ export async function deleteComment(id: string, prevState: DeleteState) {
       message: "Database error: Fail to delete comment",
     };
   }
+}
+
+export type LoginState = {
+  errors?: {
+    username?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+const LoginSchema = z.object({
+  username: z
+    .string()
+    .trim()
+    .min(1, { error: "You cannot just enter spaces." }),
+  password: z
+    .string()
+    .trim()
+    .min(18, { error: "The minimum password length is 18 characters." }),
+  email: z.null(),
+});
+export async function authenticate(
+  prevState: LoginState | undefined,
+  formData: FormData
+) {
+  const rawFormData = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+    email: formData.get("email") || null, // may be ""
+  };
+  const validatedFields = LoginSchema.safeParse(rawFormData);
+  if (!validatedFields.success) {
+    return {
+      errors: z.flattenError(validatedFields.error).fieldErrors,
+    };
+  }
+  const { username, password } = validatedFields.data;
+  const getUser: UserType[] = await sql`
+    SELECT *
+    FROM users
+    WHERE username = ${username} 
+  `;
+  if (!getUser[0]) {
+    return { message: "Username or password incorrect" };
+  }
+  const { password: hashPassword } = getUser[0];
+  const passwordMatch = await bcrypt.compare(password, hashPassword);
+  if (!passwordMatch) {
+    return { message: "Username or password incorrect" };
+  }
+
+  redirect("/");
 }

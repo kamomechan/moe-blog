@@ -56,7 +56,7 @@ export default function Form(props: {
         <p
           id="comment-error"
           aria-live="polite"
-          className="text-[#8e4141] text-sm ml-[1vw]"
+          className="text-[#8e4141] text-sm ml-[1vw] dark:text-[#d98787]"
         >
           {state.errors.content.map((item) => item)}
         </p>
@@ -75,7 +75,7 @@ export default function Form(props: {
         <button
           id="tips"
           type="button"
-          className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute"
+          className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute dark:text-[#5c93d7] lg:dark:text-[#6fa6ea]"
           onClick={handleTipsClick}
           aria-label="tips"
         ></button>
