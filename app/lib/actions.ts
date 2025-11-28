@@ -5,6 +5,7 @@ import sql from "./db";
 import bcrypt from "bcrypt";
 import type { UserType } from "./definitions";
 import { redirect } from "next/navigation";
+import { createSession } from "./session";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -152,5 +153,6 @@ export async function authenticate(
     return { message: "Username or password incorrect" };
   }
 
+  await createSession({ role: "admin" });
   redirect("/");
 }

@@ -1,3 +1,5 @@
+import type { JWTPayload } from "jose";
+
 interface MetadataType {
   id: string;
   href: string;
@@ -59,4 +61,16 @@ interface UserType {
   password: string;
 }
 
-export type { MetadataType, HeadingType, VNDBType, CommentType, UserType };
+interface PayloadType extends JWTPayload {
+  role: string;
+  id?: string[];
+}
+
+export type {
+  MetadataType,
+  HeadingType,
+  VNDBType,
+  CommentType,
+  UserType,
+  PayloadType,
+};
