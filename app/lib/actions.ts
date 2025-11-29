@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import type { UserType } from "./definitions";
 import { redirect } from "next/navigation";
 import { createSession } from "./session";
+import { verifySession } from "./dal";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -39,6 +40,7 @@ export type State = {
 
 export type DeleteState = {
   message?: string | null;
+  errors?: string | null;
 };
 
 export async function addComment(
@@ -62,21 +64,40 @@ export async function addComment(
   const { content, parent_id } = validatedFields.data;
 
   try {
+    const session = await verifySession();
+    const isAuthor = session?.role === "admin";
+
     if (parent_id) {
       const result = await sql`
-        INSERT INTO comments (post_id,parent_id,content)
-        VALUES (${postId},${parent_id},${content})
+        INSERT INTO comments (post_id,parent_id,author,content)
+        VALUES (${postId},${parent_id},${isAuthor},${content})
         RETURNING id
         `;
+      if (!session) {
+        await createSession({ id: [result[0].id], role: "guest" });
+      } else if (!isAuthor) {
+        await createSession({
+          id: [...session.id!, result[0].id],
+          role: "guest",
+        });
+      }
       return {
         message: `success: ${result[0].id}`,
       };
     } else {
       const result = await sql`
-        INSERT INTO comments (post_id,content)
-        VALUES (${postId},${content})
+        INSERT INTO comments (post_id,author,content)
+        VALUES (${postId},${isAuthor},${content})
         RETURNING id
         `;
+      if (!session) {
+        await createSession({ id: [result[0].id], role: "guest" });
+      } else if (!isAuthor) {
+        await createSession({
+          id: [...session.id!, result[0].id],
+          role: "guest",
+        });
+      }
       return {
         message: `success: ${result[0].id}`,
       };
@@ -91,6 +112,20 @@ export async function addComment(
 
 export async function deleteComment(id: string, prevState: DeleteState) {
   try {
+    const session = await verifySession();
+
+    if (!session) {
+      return {
+        errors: "No permission.",
+      };
+    }
+
+    if (session.role === "guest" && !session.id?.includes(id)) {
+      return {
+        errors: "No permission.",
+      };
+    }
+
     await sql`
     DELETE FROM comments WHERE id = ${id}
   `;

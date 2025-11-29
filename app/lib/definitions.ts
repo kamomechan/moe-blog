@@ -51,6 +51,7 @@ interface CommentType {
   id: string;
   post_id: string;
   parent_id: string | null;
+  author: boolean;
   content: string;
   created_at: string;
 }

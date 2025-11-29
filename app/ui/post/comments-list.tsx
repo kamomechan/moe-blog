@@ -80,6 +80,11 @@ export default function CommentsList({
                   >
                     reply
                   </button>
+                  {item.author && (
+                    <span className="text-[.7rem] ml-[4vw] text-[#304b6c] p-[.7vw_1.7vw] bg-[#afd1ec] rounded-[7vw] lg:ml-[1vw] lg:p-[.2vw_.5vw] dark:text-[#96adcc] dark:bg-[#243a4d] ">
+                      author
+                    </span>
+                  )}
                   <div>
                     <button
                       className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"
@@ -123,6 +128,11 @@ export default function CommentsList({
                         <span className="text-[0.7rem] text-[#505e73] dark:text-[#96a1b2]">
                           <LocalizedDate date={new Date(entry.created_at)} />
                         </span>
+                        {entry.author && (
+                          <span className="text-[.7rem] ml-[4vw] text-[#304b6c] p-[.5vw_1.3vw] bg-[#afd1ec] rounded-[7vw] lg:ml-[1vw] lg:p-[.1vw_.3vw] dark:text-[#96adcc] dark:bg-[#243a4d]">
+                            author
+                          </span>
+                        )}
                         <div>
                           <button
                             className="absolute bottom-0 right-0 p-[1vw] hover:rounded-[7vw] hover:bg-[#7db6ff45] lg:p-[0.15vw] dark:hover:bg-[#4a708f57]"

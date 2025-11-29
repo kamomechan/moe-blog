@@ -48,10 +48,15 @@ export async function createSession({
 export async function updateSession() {
   const cookieStore = await cookies();
   const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    return null;
+  }
+
   const payload = await decrypt(session);
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  if (!session || !payload) {
+  if (!payload) {
     return null;
   }
 

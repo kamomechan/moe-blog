@@ -12,6 +12,7 @@
 //       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 //       post_id VARCHAR(255) NOT NULL,
 //       parent_id UUID DEFAULT NULL REFERENCES comments(id) ON DELETE CASCADE,
+//       author BOOLEAN NOT NULL,
 //       content TEXT NOT NULL,
 //       created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 //     );
@@ -22,8 +23,8 @@
 //       .filter((item) => !item.parent_id)
 //       .map((comment) => {
 //         return sql`
-//       INSERT INTO comments (id,post_id,parent_id,content,created_at)
-//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.content},${comment.created_at})
+//       INSERT INTO comments (id,post_id,parent_id,author,content,created_at)
+//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.author},${comment.content},${comment.created_at})
 //       ON CONFLICT (id) DO NOTHING;
 //       `;
 //       })
@@ -33,8 +34,8 @@
 //       .filter((item) => item.parent_id)
 //       .map((comment) => {
 //         return sql`
-//       INSERT INTO comments (id,post_id,parent_id,content,created_at)
-//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.content},${comment.created_at})
+//       INSERT INTO comments (id,post_id,parent_id,author,content,created_at)
+//       VALUES (${comment.id},${comment.post_id},${comment.parent_id},${comment.author},${comment.content},${comment.created_at})
 //       ON CONFLICT (id) DO NOTHING;
 //       `;
 //       })
@@ -62,14 +63,14 @@
 // }
 
 export async function GET() {
-  //   try {
-  //     await sql.begin(async (sql) => {
-  //       await seedComments();
-  //       await seedUsers();
-  //     });
-  //     return Response.json({ message: "Database seeded successfully" });
-  //   } catch (error) {
-  //     return Response.json({ error }, { status: 500 });
-  //   }
+  // try {
+  //   await sql.begin(async (sql) => {
+  //     await seedComments();
+  //     // await seedUsers();
+  //   });
+  //   return Response.json({ message: "Database seeded successfully" });
+  // } catch (error) {
+  //   return Response.json({ error }, { status: 500 });
+  // }
   return Response.json({ message: "dev..." });
 }
