@@ -2,11 +2,13 @@
 import Form from "./create-form";
 import CommentsList from "./comments-list";
 import { useEffect, useRef, useState } from "react";
+import { CommentType } from "@/app/lib/definitions";
 
 export default function Comments(props: { id: string }) {
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState<CommentType[] | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isObserver, setIsObserver] = useState(false);
+  const [editId, setEditId] = useState("");
   const commentsRef = useRef<HTMLDivElement>(null);
 
   // Comments are fetched only when the user first visits the comment area or when an update is triggered.
@@ -18,7 +20,7 @@ export default function Comments(props: { id: string }) {
         throw new Error(error);
       }
       const { comments } = await response.json();
-      const data = JSON.parse(comments);
+      const data: CommentType[] = JSON.parse(comments);
       setComments(data);
     };
     if (isObserver) {
@@ -62,6 +64,8 @@ export default function Comments(props: { id: string }) {
             postId={props.id}
             setIsSuccess={setIsSuccess}
             isSuccess={isSuccess}
+            editId={editId}
+            setEditId={setEditId}
           />
         </>
       )}
@@ -70,6 +74,7 @@ export default function Comments(props: { id: string }) {
         comments={comments}
         setIsSuccess={setIsSuccess}
         isSuccess={isSuccess}
+        setEditId={setEditId}
       />
     </div>
   );

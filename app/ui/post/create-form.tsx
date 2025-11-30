@@ -1,9 +1,13 @@
 "use client";
 
-import { addComment, type State } from "@/app/lib/actions";
+import {
+  addComment,
+  editComment,
+  EditState,
+  type State,
+} from "@/app/lib/actions";
 import {
   type Dispatch,
-  type MouseEventHandler,
   type SetStateAction,
   useActionState,
   useEffect,
@@ -14,27 +18,61 @@ export default function Form(props: {
   postId: string;
   setIsSuccess: Dispatch<SetStateAction<boolean>>;
   isSuccess: boolean;
+  editId: string;
+  setEditId: Dispatch<SetStateAction<string>>;
 }) {
   const addCommentWithPostId = addComment.bind(null, props.postId);
-  const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useActionState(
-    addCommentWithPostId,
-    initialState
-  );
-  const parentRef = useRef<HTMLInputElement>(null);
+  const initialAddState: State = { message: null, errors: {} };
+  const editCommentWithId = editComment.bind(null, props.editId);
+  const initialEditState: EditState = { message: null, errors: {} };
+
+  const initialState = props.editId ? initialEditState : initialAddState;
+  const actionFunction = props.editId
+    ? editCommentWithId
+    : addCommentWithPostId;
+
+  const [state, formAction] = useActionState(actionFunction, initialState);
+
+  const parentIdRef = useRef<HTMLInputElement>(null);
+  const inputTextRef = useRef<HTMLTextAreaElement>(null);
+  const replyTipsRef = useRef<HTMLButtonElement>(null);
+  const editTipsRef = useRef<HTMLButtonElement>(null);
+
   // Cancel reply
-  const handleTipsClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const tipsElement = event.currentTarget;
-    tipsElement.textContent = "";
-    const parentElement = parentRef.current;
-    if (!parentElement) return;
-    parentElement.value = "";
+  const handleReplyTipsClick = () => {
+    const replyTipsElement = replyTipsRef.current;
+    if (!replyTipsElement) return;
+    replyTipsElement.textContent = "";
+    const parentIdElement = parentIdRef.current;
+    if (!parentIdElement) return;
+    parentIdElement.value = "";
+    const inputElement = inputTextRef.current;
+    if (!inputElement) return;
+    inputElement.value = "";
+  };
+  // Cancel edit
+  const handleEditTipsClick = () => {
+    const editTipsElement = editTipsRef.current;
+    if (!editTipsElement) return;
+    editTipsElement.textContent = "";
+    props.setEditId("");
+    const inputElement = inputTextRef.current;
+    if (!inputElement) return;
+    inputElement.value = "";
   };
 
   // Update state only on comment changes.
   useEffect(() => {
     if (state?.message?.includes("success")) {
       props.setIsSuccess(!props.isSuccess);
+    }
+    if (
+      state.message ||
+      state.errors?.content ||
+      (state as State).errors?.parent_id
+    ) {
+      handleEditTipsClick();
+      handleReplyTipsClick();
     }
   }, [state]);
 
@@ -47,10 +85,11 @@ export default function Form(props: {
         name="content"
         id="comment"
         className="w-full bg-[#ffffff63] rounded-[4vw] min-h-[32vw] p-[3vw] text-[#364153] lg:bg-[#a8d8ff40] lg:min-h-[9vw] lg:rounded-[2vw] lg:p-[1vw] dark:text-[#ccc] dark:bg-[#5e707d69]"
-        placeholder="Please authenticate to leave a comment ><"
+        placeholder="Leave a comment ><"
         aria-label="comment"
         required
         aria-describedby="comment-error"
+        ref={inputTextRef}
       ></textarea>
       {state?.errors?.content && (
         <p
@@ -61,23 +100,32 @@ export default function Form(props: {
           {state.errors.content.map((item) => item)}
         </p>
       )}
-      <input type="hidden" name="parent_id" id="parent_id" ref={parentRef} />
-      {state?.errors?.parent_id && (
+      <input type="hidden" name="parent_id" id="parent_id" ref={parentIdRef} />
+      {(state as State)?.errors?.parent_id && (
         <p
           id="parent_id"
           aria-live="polite"
           className="text-[#8e4141] text-sm ml-[1vw]"
         >
-          {state.errors.parent_id.map((item) => item)}
+          {(state as State).errors?.parent_id?.map((item) => item)}
         </p>
       )}
       <div className="relative flex justify-end mr-[10vw] lg:mr-[3vw]">
         <button
-          id="tips"
+          id="reply-tips"
           type="button"
           className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute dark:text-[#5c93d7] lg:dark:text-[#6fa6ea]"
-          onClick={handleTipsClick}
-          aria-label="tips"
+          onClick={handleReplyTipsClick}
+          aria-label="reply-tips"
+          ref={replyTipsRef}
+        ></button>
+        <button
+          id="edit-tips"
+          type="button"
+          className="text-sm text-[rgb(45_92_150)] hover:text-[#cc2199] absolute dark:text-[#5c93d7] lg:dark:text-[#6fa6ea]"
+          onClick={handleEditTipsClick}
+          aria-label="edit-tips"
+          ref={editTipsRef}
         ></button>
       </div>
       <div className="flex justify-end">

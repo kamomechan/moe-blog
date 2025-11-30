@@ -99,7 +99,7 @@ export async function addComment(
         });
       }
       return {
-        message: `success: ${result[0].id}`,
+        message: `successfully added: ${result[0].id}`,
       };
     }
   } catch (error) {
@@ -130,12 +130,64 @@ export async function deleteComment(id: string, prevState: DeleteState) {
     DELETE FROM comments WHERE id = ${id}
   `;
     return {
-      message: `success: ${id}`,
+      message: `successfully deleted: ${id}`,
     };
   } catch (error) {
     console.error(error);
     return {
       message: "Database error: Fail to delete comment",
+    };
+  }
+}
+
+const EditComment = FormSchema.omit({
+  id: true,
+  post_id: true,
+  created_at: true,
+  parent_id: true,
+});
+export type EditState = {
+  message?: string | null;
+  errors?: {
+    content?: string[];
+  };
+};
+
+export async function editComment(
+  id: string,
+  prevState: EditState | undefined,
+  formData: FormData
+) {
+  const rawFormData = {
+    content: formData.get("content"),
+  };
+  const validatedFields = EditComment.safeParse(rawFormData);
+  if (!validatedFields.success) {
+    return { errors: z.flattenError(validatedFields.error).fieldErrors };
+  }
+  const { content } = validatedFields.data;
+
+  try {
+    const session = await verifySession();
+
+    if (!session) {
+      return { errors: { content: ["No permission."] } };
+    }
+
+    if (session.role === "guest" && !session.id?.includes(id)) {
+      return { errors: { content: ["No permission."] } };
+    }
+
+    await sql`
+      UPDATE comments
+      SET content = ${content}
+      WHERE id = ${id}
+    `;
+
+    return { message: `successfully edited: ${id}` };
+  } catch (error) {
+    return {
+      message: "Database error: Fail to edit comment",
     };
   }
 }
