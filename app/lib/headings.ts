@@ -11,7 +11,10 @@ function headings(id: string) {
     const depth = match[1].length;
     const title = match[2];
     // Since rehype-slug plugin change id of title
-    const id = match[2].toLowerCase().replace(/\s/g, "-");
+    const id = match[2]
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\p{L}\p{N}\-]/gu, ""); // Special characters are replaced with spaces
     if (depth > 1 && depth < 4) {
       data.push({ depth, title, id });
     }
