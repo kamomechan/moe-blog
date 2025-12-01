@@ -17,6 +17,9 @@
 //       created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 //     );
 //     `;
+// }
+
+// async function seedData() {
 //   // Insert parents_id first
 //   await Promise.all(
 //     comments
@@ -66,7 +69,7 @@ export async function GET() {
   // try {
   //   await sql.begin(async (sql) => {
   //     await seedComments();
-  //     // await seedUsers();
+  //     await seedUsers();
   //   });
   //   return Response.json({ message: "Database seeded successfully" });
   // } catch (error) {

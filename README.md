@@ -18,6 +18,12 @@ post page:
 
 ![screenshort](./articles/moe-blog/images/4.webp)
 
+favs page:
+
+![screenshort](./articles/moe-blog/images/5.webp)
+
+![screenshort](./articles/moe-blog/images/6.webp)
+
 ## 任务清单
 
 - [x] 导航栏
@@ -60,10 +66,16 @@ git clone https://github.com/kamomechan/moe-blog.git
 
 下载 [nodejs](https://nodejs.org/en/download) 最新的 LTS 版本
 
+如果你用 GNU arch linux 可以运行下方命令从官方的 Extra 库下载
+
+```shell
+sudo pacman -S nodejs-lts-krypton npm
+```
+
 ### 依赖
 
 ```shell
-npm i -g pnpm
+sudo npm i -g pnpm
 pnpm i
 ```
 
@@ -75,6 +87,148 @@ pnpm i
 cp .env.example .env
 vim .env
 ```
+
+### 配置数据库(可选)
+
+如需开启评论，需要设置数据库。如果你使用的是云数据库托管服务，那么可以直接跳转到 [#填充数据库(可选)](#填充数据库可选)
+
+下载 [postgres](https://www.postgresql.org/download/)
+
+如果你用 GNU arch linux 可以运行下方命令从官方的 Extra 库下载，这会同时创建名为 postgres 的 linux 用户
+
+```shell
+sudo pacman -S postgresql
+```
+
+接下来的操作你可以参考 [postgres](https://www.postgresql.org/docs/) 官方文档，或者 arch wiki 的 [postgres](https://wiki.archlinux.org/title/PostgreSQL) 条目配置 postgres，或者跟着下方的步骤
+
+如果你用的是 btrfs 文件系统，需要运行下方命令禁用数据库目录的写时复制
+
+```shell
+sudo chattr +C /var/lib/postgres
+```
+
+切换到 postgres 用户的 shell 环境
+
+```shell
+sudo -iu postgres
+```
+
+初始化数据库集群
+
+```shell
+initdb --locale=C.UTF-8 --encoding=UTF8 -D /var/lib/postgres/data --data-checksums --auth-local=peer --auth-host=scram-sha-256
+```
+
+如果你看到下面的输出，那么就是成功了，使用 `exit` 返回到普通用户
+
+```shell
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgres/data -l logfile start
+```
+
+启动并启用 `postgresql.service` 服务
+
+```shell
+systemctl enable --now postgresql
+```
+
+> 提示：如果你创建一个与 linux 用户名相同的数据库角色，那么后续连接 postgres 数据库 shell 时(psql)，无需指定登录角色。例如，运行 `psql -d <database_name>`连接数据库时，当系统看到你没有通过`-U`选项指定数据库角色，会隐式将你的 linux 用户名作为数据库角色名 `-U <your_linux_username>`
+
+以 postgres 用户身份，使用 [crateuser](https://www.postgresql.org/docs/current/app-createuser.html) 命令创建一个数据库角色
+
+```shell
+sudo -u postgres createuser <your_database_role>
+```
+
+以 postgres 用户身份， 使用 [createdb](https://www.postgresql.org/docs/current/app-createdb.html) 命令创建一个数据库
+
+```shell
+sudo -u postgres createdb -O <your_database_role> <your_database_name>
+```
+
+由于我们在初始化数据库集群时，传递了`--auth-local=peer`选项，这会在`/var/lib/postgres/data/pg_hba.conf`生成以下的配置
+
+```shell
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+```
+
+这里的意思是，在本地连接任意一个数据库时，使用 peer 方法进行连接，也就是说一个 linux 用户仅能与其同名的数据库角色进行连接。这里没理解没关系，举个例子，之前我们从 Arch 仓库下载 postgres 时会自动创建一个名为`postgres`的 linux 用户，相对应的数据库默认也有一个名为`postgres`数据库角色，因此我们可以以 `postgres` 身份通过名为 `postgres` 数据库角色来连接数据库，比如一个可行的例子为`sudo -u postgres psql -U postgres -d <your_database_name>`,一个不可行的例子为`sudo -u alice psql -U postgres -d <your_database_name>`。另外，这里第一个命令使用`-U`选项指定数据库角色名可以省略，因为如果没有传递`-U`，系统默认会将 linux 用户名作为数据库角色名
+
+由于现有的`pg_hba.conf`配置，需要我们每创建一个数据库角色的同时，也要创建一个同名的 linux 用户，才能使用数据库角色进行连接，这样会导致产生不必要的 linux 用户，并且没有权限隔离，我们可以配置为名为`postgres`的数据库角色(或其他超级用户)使用 peer 认证方法进行本地连接，而其他角色使用 scram-sha-256 认证方法进行本地连接，这会在访问其他角色时需要输入密码。可以选择使用下方的配置替代上方的配置
+
+```shell
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             postgres                                peer
+local   all             all                                     scram-sha-256
+```
+
+重启`postgresql.service`，并以 postgres 身份连接数据库，使用 [ALTER](https://www.postgresql.org/docs/current/sql-alterrole.html) 命令为之后想要赋予 Login 权限的数据库角色添加密码(密码仅对具有 Login 权限的角色生效，也可以为没有此权限的角色定义密码)
+
+```shell
+systemctl restart postgresql
+sudo -u postgres psql -d <your_database_name>
+ALTER ROLE "<your_database_role>" WITH PASSWORD '<your_role_password>';
+```
+
+> 提示：ALTER 命令成功执行后会输出`ALTER ROLE`，如果没有，你可能结尾忘记了`;`
+
+> 提示：你可能会注意到`"<your_database_role>"`会用引号包裹，这是因为 postgres 默认会将没有用引号包裹的标识符(如角色名、表名、列名等)自动转为小写，如果你的角色名包含大写，则务必加上引号
+
+赋予数据库角色登录权限(安全起见，请不要为 `postgres` 角色或其他超级用户赋予 Login 权限，而是你新创建的角色)
+
+```shell
+ALTER ROLE "<your_database_role>" WITH LOGIN;
+```
+
+### 填充数据库(可选)
+
+如需开启评论，还需要填充数据库
+
+设置`.env`环境变量，如果你是用的是本地主机连接(localhost)，需要设置 SSL 为 false，数据库默认端口为`5432`。如果是远程主机连接请务必设置 SSL 为 true，关于数据库如何开启 SSL 请参考[官方文档](https://www.postgresql.org/docs/current/ssl-tcp.html)，以及 arch wiki 的[Configure PostgreSQL to be accessible from remote hosts 条目](https://wiki.archlinux.org/title/PostgreSQL#Configure_PostgreSQL_to_be_accessible_from_remote_hosts)。如果你用的是云数据库托管服务，往往已经设置了 SSL
+
+```shell
+# required
+POSTGRES_URL="postgresql://<your_database_role>:<your_role_password>@<your_host>:<your_port>/<your_database_name>"
+# default:true
+SSL=""
+```
+
+设置`/login`路由的用户名和密码，密码需要大于 18 位，如果记不住，可以使用自由开源的 [keepassxc](https://github.com/keepassxreboot/keepassxc) 作为密码管理器。设置用户凭证是用来判断你是否是管理员，会自动将密码 bcrypt 哈希加密存储到数据库
+
+```shell
+# required
+USERNAME=""
+# required
+PASSWORD=""
+```
+
+开启评论功能，验证会话签名的密钥`SESSION_SECRET`，可以通过[openssl](https://man.archlinux.org/man/openssl.1ssl)命令，生成一个 32 个字符的随机字符串来获取
+
+```shell
+openssl rand -base64 32
+```
+
+```shell
+# default:false (required)
+COMMENTS="true"
+# required
+SESSION_SECRET=""
+```
+
+取消注释 `app/seed/route.ts`文件，并在开发环境中运行
+
+```shell
+pnpm run dev
+```
+
+访问`/seed`路由，如果出现`Database seeded successfully`,就代表数据库表和用户凭证成功填充啦 w
+
+最后你可以选择删除`/seed`路由，或者注释掉
 
 ### 部署到开发环境
 
