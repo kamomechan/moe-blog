@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { readFileSync } from "node:fs";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -15,7 +16,14 @@ const withMDX = createMDX({
   options: {
     remarkPlugins: ["remark-gfm"],
     rehypePlugins: [
-      "rehype-pretty-code",
+      [
+        "rehype-pretty-code",
+        {
+          theme: JSON.parse(
+            readFileSync("./app/lib/themes/github-dark-dimmed.json", "utf-8")
+          ),
+        },
+      ],
       "rehype-slug",
       "rehype-autolink-headings",
     ],
