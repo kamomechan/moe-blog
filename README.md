@@ -2,7 +2,7 @@
 
 ## 简介
 
-使用 nextjs 构建的萌萌 blog
+使用 [nextjs](https://nextjs.org/) 构建的萌萌 blog
 
 ## lighthouse
 
@@ -24,17 +24,13 @@ favs page:
 
 ![screenshort](./articles/moe-blog/images/6.webp)
 
-## 任务清单
+## 功能
 
-- [x] 导航栏
-
-- [x] 分页
-
-- [x] markdown to html
+- [x] Markdown to html
 
 - [x] 代码语法高亮/复制按钮
 
-- [x] 文章侧边栏
+- [x] 文章侧边栏(TOC)
 
 - [x] RSS
 
@@ -47,6 +43,33 @@ favs page:
 - [x] 黑暗模式 (自动跟随系统主题)
 
 - [x] 评论功能 (使用 Postgres 作为数据库)
+
+## 渲染方式
+
+如你所见，全站采用 [SSG](https://developer.mozilla.org/en-US/docs/Glossary/SSG)(Static site generator) 渲染，而搜索页面和带有评论的帖子页面采用 SSG+API route 混合渲染(Hybrid rendering)，这意味着有极快的 FCP(First Contentful Paint) 速度，同时弥补了 [SSR](https://developer.mozilla.org/en-US/docs/Glossary/SSR)(Server-side rendering) 和 [CSR](https://developer.mozilla.org/en-US/docs/Glossary/CSR)(Client-side rendering) 的动态性
+
+```ini
+Route (app)
+┌ ○ /_not-found
+├ ● /[[...id]]
+│ └ /
+├ ƒ /api/data
+├ ƒ /api/search
+├ ● /favs/[[...id]]
+│ ├ /favs
+│ ├ /favs/2
+│ └ /favs/3
+├ ○ /login
+├ ● /post/[id]
+│ ├ /post/moe-blog
+│ └ /post/vndb-rss
+├ ○ /rss
+├ ○ /search
+└ ƒ /seed
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+```
 
 ## 部署
 
@@ -88,9 +111,9 @@ cp .env.example .env
 vim .env
 ```
 
-### 配置数据库(可选)
+### 配置数据库-可选
 
-如需开启评论，需要设置数据库。如果你使用的是云数据库托管服务，那么可以直接跳转到 [#填充数据库(可选)](#填充数据库可选)
+如需开启评论，需要设置数据库。如果你使用的是云数据库托管服务，那么可以直接跳转到 [#填充数据库-可选](#填充数据库-可选)
 
 下载 [postgres](https://www.postgresql.org/download/)
 
@@ -185,7 +208,7 @@ ALTER ROLE "<your_database_role>" WITH PASSWORD '<your_role_password>';
 ALTER ROLE "<your_database_role>" WITH LOGIN;
 ```
 
-### 填充数据库(可选)
+### 填充数据库-可选
 
 如需开启评论，还需要填充数据库
 
@@ -242,6 +265,70 @@ pnpm run dev
 pnpm run build
 pnpm start
 ```
+
+## 无障碍与 SEO
+
+由于从编写之初就考虑了可访问性，包括颜色对比度的选用，可交互式按钮的 aria 标签，基本上每个元素都符合 WCAG AA 无障碍文本标准
+
+对于 SEO，你可能会注意到每篇 mdx 格式的文章中都导出了一个 metadata 对象，其中`title`和`description`是你想要展示到搜索引擎中的数据，`date`与`edit`分别表示创建与编辑日期，日期应使用 [ISO](https://en.wikipedia.org/wiki/ISO_8601) 格式的字符串表示 YYYY-MM-DD。
+
+```js
+export const metadata = {
+  title: "moe-blog",
+  date: "2025-11-08",
+  description: "Next.js-built Static Moe Blog",
+  edit: "2025-12-02",
+};
+```
+
+文章路径使用的则是目录名，即`/post/<your_folder_name>`，对于文章路径你应该使用拉丁字母，空格应使用连字符`-`。由于参考了 [hugo](https://github.com/gohugoio/hugo) 的目录设计，图片应包含在文章目录下的 images 目录中，这样结构更清晰，也不用担心命名冲突，对于每篇文章都存储在`articles/<your_article_path>/index.mdx`
+
+```markdown
+. articles
+└── moe-blog/
+│ └── images/
+│ ├── index.mdx
+└── vndb-rss/
+│ └── images/
+│ └── index.mdx
+```
+
+对于图片导入你应使用 [Image](https://nextjs.org/docs/app/getting-started/images) 组件，并包含 alt 属性，由于是本地导入，nextjs 会自动优化尺寸和图片格式(当然了，最好事先转成 webp 格式并做好压缩，这样尺寸会小很多)
+
+```jsx
+import Image from "next/image";
+import i1 from "./images/1.webp";
+<Image src={i1} alt="screenshort" />;
+```
+
+如果你想使用我的 blog 作为模板，还应该自定义你的网站标题和描述
+
+编辑 root layout 文件, `app/layout.tsx`，替换为你自己的标题和描述
+
+```tsx
+export const metadata: Metadata = {
+  title: "moe-blog",
+  description:
+    "Discussing visual novels and moe culture, with occasional posts on open-source projects.",
+};
+```
+
+另外还需编辑 RSS route 文件，`app/rss/route.ts`
+
+```ts
+const title = "moe-blog";
+const description =
+  "Discussing visual novels and moe culture, with occasional posts on open-source projects.";
+const link = "https://tia-chan.top";
+```
+
+如果你想自定义背景，可以替换`public`目录中的图片，`background-desktop.webp`和`background.webp`，分别表示桌面端和移动端的背景，替换时记得降低透明度唷，不然文字对比度太低对无障碍不友好的说，你可以使用 Firefox 的[无障碍工具](https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/)检查对比度，另外需要转成 webp 格式，最好压缩一下体积
+
+访问本站时记得关闭 [Dark Reader](https://github.com/darkreader/darkreader) 之类的黑色主题插件，因为本站有精心设计的黑色主题，使用插件可能会导致文字对比度不足，或者图片显示不全等问题
+
+## 贡献
+
+如果你发现了某个 bug，或者有新的想法，欢迎大家贡献代码，记得贡献前创建[Issue](https://codeberg.org/nokutan/moe-blog/issues)哦，防止贡献重复代码的说
 
 ## 日志
 

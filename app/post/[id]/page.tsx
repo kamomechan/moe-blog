@@ -47,7 +47,14 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         <div className="prose prose-headings:text-[#3a7aae] prose-custom dark:prose-invert dark:prose-headings:text-[#4586bb]">
           <Post />
         </div>
-        <time className="text-[#3876a8] text-[0.8rem] mt-8 flex justify-end lg:text-[#326a97] dark:text-[#589ad0] lg:dark:text-[#62a6dd]">
+        <time
+          dateTime={
+            editedDate
+              ? new Date(editedDate).toISOString()
+              : new Date(date).toISOString()
+          }
+          className="text-[#3876a8] text-[0.8rem] mt-8 flex justify-end lg:text-[#326a97] dark:text-[#589ad0] lg:dark:text-[#62a6dd]"
+        >
           {editedDate ? `Last edited on ${editedDate}` : `Created on ${date}`}
         </time>
       </article>

@@ -19,7 +19,7 @@ export function GET() {
     <description>${item.description}</description>
     <link>${link}${item.href}</link>
     <pubDate>${item.date}</pubDate>
-    <guid isPermaLink="false">https://tia-chan.top${item.href}</guid>
+    <guid isPermaLink="false">${link}${item.href}</guid>
  </item>`;
  })}
 </channel>
